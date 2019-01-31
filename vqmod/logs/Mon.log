@@ -1,0 +1,33 @@
+---------- Date: 2017-02-27 22:18:35 ~ IP : 178.165.3.18 ----------
+REQUEST URI : /puckovoi-kabel-gys-3m-320a.html
+MOD DETAILS:
+   modFile   : /home/technori/technoride.com.ua/www/vqmod/xml/custom_title.xml
+   id        : Custom titles
+   version   : 1.0.0
+   vqmver    : 2.1.5
+   author    : ovife21
+SEARCH NOT FOUND (ABORTING MOD): $this->document->setTitle($product_info['name']);
+
+MOD DETAILS:
+   modFile   : /home/technori/technoride.com.ua/www/vqmod/xml/product_seo_plus_title_with_category.xml
+   id        : Product SEO Plus Product Title + Category
+   version   : 1.0.0
+   vqmver    : 2.1.5
+   author    : ovife21
+SEARCH NOT FOUND (ABORTING MOD): setTitle($product_info['name'])
+----------------------------------------------------------------------
+
+
+---------- Date: 2017-02-27 23:17:15 ~ IP : 178.165.3.18 ----------
+REQUEST URI : /oil
+MOD DETAILS:
+   modFile   : /home/technori/technoride.com.ua/www/vqmod/xml/custom_title.xml
+   id        : Custom titles
+   version   : 1.0.0
+   vqmver    : 2.1.5
+   author    : ovife21
+SEARCH NOT FOUND (ABORTING MOD): $this->document->setTitle($category_info['name']);
+
+----------------------------------------------------------------------
+
+

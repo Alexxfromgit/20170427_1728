@@ -1,0 +1,669 @@
+.box > .heading .buttonses, .foot_heading .buttonses {
+	float: right;
+	padding-top: 3px;
+	margin-right: 5px;
+}
+.box > .heading .buttonses a + a, .foot_heading .buttonses a + a {
+	margin-left: 10px;
+}
+.box > .contentes h2 { 
+	text-transform: uppercase;
+	color: #FF802B;
+	font-size: 15px;
+	font-weight: bold;
+	padding-bottom: 3px;
+	border-bottom: 1px dotted #000000;	
+}
+.box > .contentes {
+	padding: 10px;
+	border-left: 1px solid #CCCCCC;
+	border-right: 1px solid #CCCCCC;
+	min-height: 300px;
+	overflow: auto;
+}
+.button_save {
+	background: url('../image/icon/save_input.png') left 1px no-repeat;
+	height: 30px;
+	width: 30px;
+	display: inline-block;
+}
+.button_save:hover {
+	background: url('../image/icon/save_input.png') left bottom no-repeat;
+}
+.button_cancel {
+	background: url('../image/icon/cancel.png') left bottom no-repeat;
+	height: 30px;
+	width: 30px;
+	display: inline-block;
+}
+.button_cancel:hover {
+	background: url('../image/icon/cancel.png') left top no-repeat;
+}
+.button_insert {
+	background: url('../image/icon/insert.png') left top no-repeat;
+	height: 30px;
+	width: 30px;
+	display: inline-block;
+}
+.button_insert:hover {
+	background: url('../image/icon/insert.png') left bottom no-repeat;
+}
+.button_repair {
+	background: url('../image/icon/repair.png') left 1px no-repeat;
+	height: 30px;
+	width: 30px;
+	display: inline-block;
+}
+.button_repair:hover {
+	background: url('../image/icon/repair.png') left bottom no-repeat;
+}
+.button_copy {
+	background: url('../image/icon/copy.png') left top no-repeat;
+	height: 30px;
+	width: 30px;
+	display: inline-block;
+}
+.button_copy:hover {
+	background: url('../image/icon/copy.png') left bottom no-repeat;
+}
+.button_delete {
+	background: url('../image/icon/delete.png') left top no-repeat;
+	height: 30px;
+	width: 30px;
+	display: inline-block;
+}
+.button_delete:hover {
+	background: url('../image/icon/delete.png') left bottom no-repeat;
+}
+.button_edites {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	padding: 0;
+	background: url('../image/icon/edit.png') left bottom no-repeat;
+}
+.button_edites:hover {
+	background: url('../image/icon/edit.png') left top no-repeat;
+}
+.button_install {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	padding: 0;
+	background: url('../image/icon/insertes.png') left top no-repeat;
+}
+.button_install:hover {
+	background: url('../image/icon/insertes.png') left bottom no-repeat;
+}
+.button_uninstall {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	padding: 0;
+	background: url('../image/icon/deleted.png') left top no-repeat;
+}
+.button_uninstall:hover {
+	background: url('../image/icon/deleted.png') left bottom no-repeat;
+}
+.button_print {
+	background: url('../image/icon/print.png') left 1px no-repeat;
+	height: 30px;
+	width: 30px;
+	display: inline-block;
+}
+.button_print:hover {
+	background: url('../image/icon/print.png') left bottom no-repeat;
+}
+.button_view {
+	background: url('../image/icon/view.png') left 1px no-repeat;
+	height: 25px;
+	width: 25px;
+	display: inline-block;
+}
+.button_view:hover {
+	background: url('../image/icon/view.png') left bottom no-repeat;
+}
+.button_send {
+	background: url('../image/icon/send.png') left 1px no-repeat;
+	height: 25px;
+	width: 25px;
+	display: inline-block;
+}
+.button_send:hover {
+	background: url('../image/icon/send.png') left bottom no-repeat;
+}
+.button_sends {
+	background: url('../image/icon/sends.png') left 1px no-repeat;
+	height: 30px;
+	width: 30px;
+	display: inline-block;
+}
+.button_sends:hover {
+	background: url('../image/icon/sends.png') left bottom no-repeat;
+}
+.button_restore {
+	background: url('../image/icon/restore.png') left top no-repeat;
+	height: 30px;
+	width: 30px;
+	display: inline-block;
+}
+.button_restore:hover {
+	background: url('../image/icon/restore.png') left bottom no-repeat;
+}
+.button_backup {
+	background: url('../image/icon/backup.png') left top no-repeat;
+	height: 30px;
+	width: 30px;
+	display: inline-block;
+}
+.button_backup:hover {
+	background: url('../image/icon/backup.png') left bottom no-repeat;
+}
+.button_setting {
+	background: url('../image/icon/setting.png') left top no-repeat;
+	height: 30px;
+	width: 30px;
+	display: inline-block;
+}
+.button_setting:hover {
+	background: url('../image/icon/setting.png') left bottom no-repeat;
+}
+.button_clear {
+	background: url('../image/icon/clear.png') left 1px no-repeat;
+	height: 30px;
+	width: 30px;
+	display: inline-block;
+}
+.button_clear:hover {
+	background: url('../image/icon/clear.png') left bottom no-repeat;
+}
+.button_filter {
+	background: url('../image/icon/filter_list.png') center top no-repeat;
+	height: 32px;
+	width: 32px;
+	display: block;
+}
+.button_filter:hover {
+	background: url('../image/icon/filter_list.png') left bottom no-repeat;
+}
+.button_download {
+	background: url('../image/icon/download.png') 0 bottom no-repeat;
+	height: 32px;
+	width: 36px;
+	display: inline-block;
+	vertical-align: middle;
+}
+.hidden, tr.hidden {
+	display: none;
+}
+.quick-button-icon {
+	padding: 3px;
+	text-align: right;
+}
+.quick-button-icon a {
+	text-decoration: none;
+}
+.button-action {
+	display: inline-block;
+}
+.button_edit {
+	background: url('../image/icon/product_edit.png') left bottom no-repeat;
+	height: 32px;
+	width: 32px;
+	display: inline-block;
+	text-indent: -9999px;
+}
+.button_edit:hover {
+	background: url('../image/icon/product_edit.png') left top no-repeat;
+}
+a.product-edit {
+	background: url('../image/icon/product_edit.png') left bottom no-repeat;
+	height: 32px;
+	width: 32px;
+	display: inline-block;
+}
+a.product-edit:hover {
+	background: url('../image/icon/product_edit.png') left top no-repeat;
+}
+a.product-view {
+	background: url('../image/icon/product_view.png') left bottom no-repeat;
+	height: 32px;
+	width: 32px;
+	display: inline-block;
+}
+a.product-view:hover {
+	background: url('../image/icon/product_view.png') left 2px no-repeat;
+}
+.save {
+	position: relative;
+	z-index: 9;
+	float: right;
+	background: #ffffff url('../image/icon/save.png') right bottom no-repeat;
+	width: 50px;
+	height: 32px;
+}
+.save:hover {
+	background: #ffffff url('../image/icon/save.png') right top no-repeat;
+}
+a.button_general_list {
+	display: inline-block;
+	width: 32px;
+	height: 32px;
+	background: url('../image/icon/live_edit.png') left top no-repeat;
+}
+a.button_general_list:hover {
+	background: url('../image/icon/live_edit.png') left bottom no-repeat;
+}
+a.button_data {
+	display: inline-block;
+	width: 32px;
+	height: 32px;
+	background: url('../image/icon/data.png') left top no-repeat;
+}
+a.button_data:hover {
+	background: url('../image/icon/data.png') left bottom no-repeat;
+}
+a.button_general_data {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background: url('../image/icon/general_data.png') left top no-repeat;
+}
+a.button_general_data:hover {
+	background: url('../image/icon/general_data.png') left bottom no-repeat;
+}
+a.button_category {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background: url('../image/icon/category.png') left top no-repeat;
+}
+a.button_category:hover {
+	background: url('../image/icon/category.png') left bottom no-repeat;
+}
+a.button_filters {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background: url('../image/icon/filter.png') left top no-repeat;
+}
+a.button_filters:hover {
+	background: url('../image/icon/filter.png') left bottom no-repeat;
+}
+a.button_related {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background: url('../image/icon/related.png') left top no-repeat;
+}
+a.button_related:hover {
+	background: url('../image/icon/related.png') left center no-repeat;
+}
+a.button_related_none {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background: url('../image/icon/related.png') left bottom no-repeat;
+}
+a.button_related_none:hover {
+	background: url('../image/icon/related.png') left center no-repeat;
+}
+a.button_code {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background: url('../image/icon/code.png') left top no-repeat;
+}
+a.button_code:hover {
+	background: url('../image/icon/code.png') left bottom no-repeat;
+}
+a.button_tax {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background: url('../image/icon/tax.png') left top no-repeat;
+}
+a.button_tax:hover {
+	background: url('../image/icon/tax.png') left center no-repeat;
+}
+a.button_tax_none {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background: url('../image/icon/tax.png') left bottom no-repeat;
+}
+a.button_tax_none:hover {
+	background: url('../image/icon/tax.png') left center no-repeat;
+}
+a.button_minimum {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background: url('../image/icon/minimum.png') left top no-repeat;
+}
+a.button_minimum:hover {
+	background: url('../image/icon/minimum.png') left bottom no-repeat;
+}
+a.button_subtract {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background: url('../image/icon/subtract.png') left top no-repeat;
+}
+a.button_subtract:hover {
+	background: url('../image/icon/subtract.png') left bottom no-repeat;
+}
+a.button_dimension {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background: url('../image/icon/dimension.png') left top no-repeat;
+}
+a.button_dimension:hover {
+	background: url('../image/icon/dimension.png') left bottom no-repeat;
+}
+a.button_weight {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background: url('../image/icon/weight.png') left top no-repeat;
+}
+a.button_weight:hover {
+	background: url('../image/icon/weight.png') left bottom no-repeat;
+}
+a.button_date_available {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background: url('../image/icon/date_available.png') left top no-repeat;
+}
+a.button_date_available:hover {
+	background: url('../image/icon/date_available.png') left bottom no-repeat;
+}
+a.button_attribute {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background: url('../image/icon/attribute.png') left top no-repeat;
+}
+a.button_attribute:hover {
+	background: url('../image/icon/attribute.png') left center no-repeat;
+}
+a.button_attribute_none {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background: url('../image/icon/attribute.png') left bottom no-repeat;
+}
+a.button_attribute_none:hover {
+	background: url('../image/icon/attribute.png') left center no-repeat;
+}
+a.button_options {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background: url('../image/icon/options.png') left top no-repeat;
+}
+a.button_options:hover {
+	background: url('../image/icon/options.png') left center no-repeat;
+}
+a.button_options_none {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background: url('../image/icon/options.png') left bottom no-repeat;
+}
+a.button_options_none:hover {
+	background: url('../image/icon/options.png') left center no-repeat;
+}
+a.button_special {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background: url('../image/icon/special.png') left top no-repeat;
+}
+a.button_special:hover {
+	background: url('../image/icon/special.png') left center no-repeat;
+}
+a.button_special_none {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background: url('../image/icon/special.png') left bottom no-repeat;
+}
+a.button_special_none:hover {
+	background: url('../image/icon/special.png') left center no-repeat;
+}
+a.button_discount {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background: url('../image/icon/discount.png') left top no-repeat;
+}
+a.button_discount:hover {
+	background: url('../image/icon/discount.png') left center no-repeat;
+}
+a.button_discount_none {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background: url('../image/icon/discount.png') left bottom no-repeat;
+}
+a.button_discount_none:hover {
+	background: url('../image/icon/discount.png') left center no-repeat;
+}
+a.button_images_none {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background: url('../image/icon/image.png') left bottom no-repeat;
+}
+a.button_images_none:hover {
+	background: url('../image/icon/image.png') left center no-repeat;
+}
+a.button_stores {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background: url('../image/icon/stores.png') left top no-repeat;
+}
+a.button_stores:hover {
+	background: url('../image/icon/stores.png') left bottom no-repeat;
+}
+a.button_downloads {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background: url('../image/icon/downloads.png') left top no-repeat;
+}
+a.button_downloads:hover {
+	background: url('../image/icon/downloads.png') left center no-repeat;
+}
+a.button_downloads_none {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background: url('../image/icon/downloads.png') left bottom no-repeat;
+}
+a.button_downloads_none:hover {
+	background: url('../image/icon/downloads.png') left center no-repeat;
+}
+a.button_reward {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background: url('../image/icon/reward.png') left top no-repeat;
+}
+a.button_reward:hover {
+	background: url('../image/icon/reward.png') left bottom no-repeat;
+}
+a.button_images {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background: url('../image/icon/image.png') left top no-repeat;
+}
+a.button_images:hover {
+	background: url('../image/icon/image.png') left center no-repeat;
+}
+a.button_design {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background: url('../image/icon/design.png') left top no-repeat;
+}
+a.button_design:hover {
+	background: url('../image/icon/design.png') left bottom no-repeat;
+}
+.select-option {
+	color: #2db533;
+	text-align: left;
+}
+table.popup-form {
+	width: 100%;
+	border-collapse: collapse;
+}
+table.popup-form > tbody > tr > td:first-child {
+	width: 200px;
+}
+table.popup-form > tbody > tr > td {
+	padding: 10px;
+	color: #000000;
+	border: none;
+	background: #fff;
+}
+tr.change {
+	border-top: 1px dotted #aaa;
+}
+.button-save-name {
+	position: relative;
+	left: 257px;
+	background: url('../image/icon/save_input.png') right bottom no-repeat;
+	display: block;
+	width: 29px;
+	height: 29px;
+}
+.button-save-name:hover {
+	background: url('../image/icon/save_input.png') right top no-repeat;
+}
+.button-save-left {
+	position: relative;
+	left: 157px;
+	background: url('../image/icon/save_input.png') right bottom no-repeat;
+	display: block;
+	width: 29px;
+	height: 29px;
+}
+.button-save-left:hover {
+	background: url('../image/icon/save_input.png') right top no-repeat;
+}
+.button-save-right {
+	position: relative;
+	right: 0px;
+	background: url('../image/icon/save_input.png') right bottom no-repeat;
+	display: block;
+	width: 29px;
+	height: 29px;
+}
+.button-save-right:hover {
+	background: url('../image/icon/save_input.png') right top no-repeat;
+}
+.button-save-available {
+	position: relative;
+	left: 98px;
+	background: url('../image/icon/save_input.png') right bottom no-repeat;
+	display: block;
+	width: 29px;
+	height: 29px;
+}
+.button-save-available:hover {
+	background: url('../image/icon/save_input.png') right top no-repeat;
+}
+.input-edit-left {
+	float: left;
+}
+.input-edit-right {
+	float: right;
+}
+.ajax-edit-left {
+   display: none;
+   float: left;
+}
+.ajax-edit-left input {
+   text-align: left;
+   cursor: text;
+   padding: 6px 32px 5px 3px;
+}
+.ajax-edit-left + span {
+   cursor: pointer;
+   padding: 7px 32px 7px 0;
+}
+.ajax-edit-left + span:hover {
+	background: url('../image/icon/input_edit.png') right top no-repeat;
+	-webkit-transition: background linear 0.2s;
+	-moz-transition: background linear 0.2s;
+}
+.ajax-edit-right {
+	display: none;
+	float: right;
+}
+.ajax-edit-right input {
+   text-align: left;
+   cursor: text;
+}
+.ajax-edit-right + span {
+   cursor: pointer;
+}
+.ajax-edit-right + span:hover {
+	background: url('../image/icon/input_edit.png') right top no-repeat;
+	padding: 7px 32px 7px 0;
+}
+.enabled_en {
+	background: url('../image/icon/status_en.png') center top no-repeat;
+	height: 32px;
+	width: 60px;
+	display: block;
+	text-indent: -9999px;
+}
+.disabled_en {
+	background: url('../image/icon/status_en.png') center bottom no-repeat;
+	height: 32px;
+	width: 60px;
+	display: block;
+	text-indent: -9999px;
+}
+.enabled_ru {
+	background: url('../image/icon/status_ru.png') center top no-repeat;
+	height: 32px;
+	width: 60px;
+	display: block;
+	text-indent: -9999px;
+}
+.disabled_ru {
+	background: url('../image/icon/status_ru.png') center bottom no-repeat;
+	height: 32px;
+	width: 60px;
+	display: block;
+	text-indent: -9999px;
+}
+.prices .sale {
+	position: relative;
+	float: left;
+	left: 0;
+	top: -15px;
+	width: 10px;
+	height: 10px;
+	background: #f93615;
+	border: 1px solid #d82e12;
+	-webkit-border-radius: 4px 4px 4px 4px;
+	-moz-border-radius: 4px 4px 4px 4px;
+	-khtml-border-radius: 4px 4px 4px 4px;
+	border-radius: 4px 4px 4px 4px;
+}
+.info-name {
+	position: relative;
+	float: right;
+	width: 15px;
+	height: 15px;
+	background: url('../image/icon/info.png') center center no-repeat;
+}

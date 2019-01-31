@@ -1,0 +1,143 @@
+<?php
+// Heading
+$_['heading_title']			= '<span style="height:20px;width:117px;display:inline-block;margin-top:8px;background:url(view/javascript/kw_flycart/img/mini.png) no-repeat 50% 50%;"></span><span style="display:inline-block;margin-top:8px;float:right;font-weight:bold;">Module Settings KW FlyCart</span>';
+$_['common_title']			= 'KW FlyCart';
+$_['common_description']	= 'KW FlyCart - customizable shopping cart. Suitable for any design. The presets will help you understand the capabilities of the module. Thank You for purchasing!';
+
+// Entry
+$_['entry_description']		= 'Welcome message:';
+$_['text_module']			= 'Modules';
+$_['text_success']			= 'Success: You have modified module KW FlyCart!';
+$_['entry_admin']         	= 'Only administrators:';
+$_['entry_layout']        	= 'Layout:';
+$_['entry_position']      	= 'Position:';
+$_['entry_status']        	= 'Status:';
+$_['entry_sort_order']    	= 'Sort Order:';
+$_['text_content_top']    	= 'Content Top';
+$_['text_content_bottom'] 	= 'Content Bottom';
+$_['text_column_left']    	= 'Column Left';
+$_['text_column_right']   	= 'Column Right';
+$_['button_apply']			= 'Apply';
+$_['text_yes']				= 'Yes';
+$_['text_no']				= 'None';
+$_['tools_upload']			= 'Upload';
+$_['tools_delete']			= 'Delete';
+$_['tools_close']			= 'To close Order';
+$_['tools_open']			= 'To open Order';
+
+// Error
+$_['error_permission']		= 'Warning: You do not have permission to modify module KW FlyCart!';
+
+// Tools
+$_['tools_choose']			= 'Options';
+$_['tools_main']			= 'Generals';
+$_['tools_popup']			= 'Popup';
+$_['tools_fly']				= 'Pointer';
+$_['module_tools']			= 'Position';
+$_['tools_options']			= 'Options in Popup';
+$_['tools_typepres']		= 'Type and Presets';
+$_['tools_butcolor']		= 'Button color';
+$_['tools_blue']			= 'Blue';
+$_['tools_black']			= 'Black';
+$_['tools_lblue']			= 'Light Blue';
+$_['tools_white']			= 'White';
+$_['tools_green']			= 'Green';
+$_['tools_orange']			= 'Orange';
+$_['tools_red']				= 'Red';
+$_['tools_position']		= 'Type Position';
+$_['tools_design']			= 'Widget style';
+$_['tools_tselect']			= 'Select Type';
+$_['tools_tpreset']			= 'Select Preset';
+$_['tools_flycart']			= 'Widget';
+$_['tools_module']			= 'Module';
+$_['tools_srtandart']		= 'Default';
+$_['tools_flypos']			= 'Layout';
+$_['tools_offset']			= 'Offset';
+$_['tools_horizontal']		= 'Horizontal';
+$_['tools_vertical']		= 'Vertical';
+$_['tools_top_right']		= 'Right Top';
+$_['tools_bottom_right']	= 'Right Bottom';
+$_['tools_top_left']		= 'Left Top';
+$_['tools_bottom_left']		= 'Left Bottom';
+$_['tools_size']			= 'Image';
+$_['tools_height']			= 'Height';
+$_['tools_width']			= 'Width';
+$_['tools_fixed']			= 'fixed';
+$_['tools_absolute']		= 'absolute';
+$_['tools_relative']		= 'relative';
+$_['tools_vimg']			= 'Image';
+$_['tools_vtext']			= 'Text';
+$_['tools_vcolor']			= 'Color';
+$_['tools_vsize']			= 'Size';
+$_['tools_vmargin']			= 'Margins';
+$_['tools_pgeneral']		= 'General';
+$_['tools_pheader']			= 'Header';
+$_['tools_pcont']			= 'Content';
+$_['tools_pfooter']			= 'Footer';
+$_['tools_plb']				= 'Use Popup';
+$_['tools_pcf']				= 'Open when you add';
+$_['tools_pco']				= 'Overlay Color';
+$_['tools_pbg']				= 'Background Color';
+$_['tools_pcb']				= 'Border Color';
+$_['tools_pct']				= 'Text Color';
+$_['tools_pcct']			= 'Close Color';
+$_['tools_pcrt']			= 'Remove Color';
+$_['tools_pcl']				= 'Link Color';
+$_['tools_pcs']				= 'Scrollbar Color';
+$_['tools_pce']				= 'Empty Cart Text Color';
+$_['tools_frame']			= 'Frame';
+$_['tools_itemimg']			= 'Item Image';
+$_['tools_img']				= 'Image';
+$_['tools_fs']				= 'Use Frame';
+$_['tools_fc']				= 'Frame Color';
+$_['tools_fsize']			= 'Frame Size';
+$_['tools_anim']			= 'Animation Speed';
+$_['tools_rotate']			= 'Rotate';
+$_['tools_radius']			= 'Border Radius';
+
+// help
+$_['tools_tselech']			= 'Widget: Can be anywhere on the page. Module: Is a cart in a template position. Default: Default cart with the functionality of the FlyCart.';
+$_['tools_tpreseth']		= 'Default options.';
+$_['tools_optionsh']		= 'On/Off options in the popup.';
+$_['tools_flyposh']			= 'Position on the page. Specify in px or %.';
+$_['tools_positionh']		= 'Type of position in CSS.';
+$_['tools_horizontalh']		= 'This option depends on the type of position. Specify in px or %.';
+$_['tools_verticalh']		= 'This option depends on the type of position. Specify in px or %.';
+$_['tools_heighth']			= 'Widget height can be different from the image size. Specify in px.';
+$_['tools_widthh']			= 'Widget width can be different from the image size. Specify in px.';
+$_['tools_vimgh']			= 'Edit';
+$_['tools_vcolorh']			= 'Item counter color. Specify in px.';
+$_['tools_vsizeh']			= 'Item counter size. Specify in px, em, pt.';
+$_['tools_vmarginh']		= 'Default text position located in center. Specify in px.';
+$_['tools_plbh']			= 'If disabled, use default cart.';
+$_['tools_pcfh']			= 'Open the shopping cart on Add to cart';
+$_['tools_pcoh']			= 'Overlay color';
+$_['tools_pbgh']			= 'Background color.';
+$_['tools_pcbh']			= 'Border-bottom color.';
+$_['tools_pcth']			= 'Title color.';
+$_['tools_pccth']			= 'Color of "Close" button.';
+$_['tools_pclh']			= 'Item title color.';
+$_['tools_pcth']			= 'Text color.';
+$_['tools_pcrth']			= 'Color of "Remove" button.';
+$_['tools_pcbhb']			= 'Item border-bottom color.';
+$_['tools_pcsрh']			= 'Scrollbar color in popup.';
+$_['tools_pceh']			= 'Text color in the empty cart.';
+$_['tools_pcbth']			= 'Border-top color.';
+$_['tools_butcolorp']		= 'Popup button style.';
+$_['tools_tselecth']		= 'Frame can be used together with images.';
+$_['tools_fsh']				= 'On/Off frame.';
+$_['tools_fch']				= 'Frame color.';
+$_['tools_fsizeh']			= 'Frame size.';
+$_['tools_animh']			= 'Frame animation speed.';
+$_['tools_rotateh']			= 'On/Off rotate pointer.';
+$_['tools_radiush']			= 'Specify in px or %.';
+
+// presets
+$_['preset_1']				= 'Preset 1';
+$_['preset_2']				= 'Preset 2';
+$_['preset_3']				= 'Preset 3';
+$_['preset_4']				= 'Preset 4';
+$_['preset_5']				= 'Preset 5';
+$_['preset_6']				= 'Preset 6';
+$_['preset_7']				= 'Preset 7';
+?>

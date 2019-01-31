@@ -1,0 +1,18 @@
+<extension>
+    <id>Shopunity Admin Theme Patch</id>
+    <type>patch</type>
+    <version>1.0</version>
+    <mbooth_version>1.0</mbooth_version>
+    <author>Dreamvention</author>
+    <files>
+		<file>admin/mbooth/xml/mbooth_shopunity_admin_patch.xml</file>
+
+    </files>
+	<dirs>
+		<dir>admin/view/javascript/shopunity</dir>
+		<dir>admin/view/stylesheet/shopunity</dir>
+		<dir>admin/view/image/shopunity</dir>
+		
+		<dir>system/library/hyperlight</dir>
+	</dirs>
+</extension>

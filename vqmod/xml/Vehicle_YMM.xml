@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+	<id>Vehicle Year/Make/Model Filter</id>
+	<version>2.17.0</version>
+	<vqmver>2.3.0</vqmver>
+	<author>Spot On Solutions http://spotonsolutions.net</author>
+	<file name="catalog/controller/common/maintenance.php">
+		<operation>
+			<search position="after"><![CDATA[public function index() {]]></search>
+			<add><![CDATA[if(isset($this->request->cookie['ymm']['make'])){
+			$this->session->data['ymm']['make'] = $this->request->cookie['ymm']['make'];
+		}
+		if(isset($this->request->cookie['ymm']['model'])){
+			$this->session->data['ymm']['model'] = $this->request->cookie['ymm']['model'];
+		}
+		if(isset($this->request->cookie['ymm']['engine'])){
+			$this->session->data['ymm']['engine'] = $this->request->cookie['ymm']['engine'];
+		}
+		if(isset($this->request->cookie['ymm']['year'])){
+			$this->session->data['ymm']['year'] = $this->request->cookie['ymm']['year'];
+		}
+		]]></add>
+		</operation>
+	</file>
+	<file name="catalog/model/catalog/manufacturer.php">
+		<operation>
+			<search position="before"><![CDATA[$sort_data = array(]]></search>
+			<add><![CDATA[if(isset($this->session->data['ymm'])){
+			$sql .= "AND m.manufacturer_id IN(SELECT p.manufacturer_id FROM " . DB_PREFIX . "products p LEFT JOIN " . DB_PREFIX . "product_to_ymm p2y ON (p2y.product_id = p.product_id) WHERE (p2y.make_id = '" . $this->session->data['ymm']['make'] . "'";
+			if(!empty($this->session->data['ymm']['model'])){
+			$sql .= " AND p2y.model_id = '" . $this->session->data['ymm']['model'] . "'";
+			}
+			if(!empty($this->session->data['ymm']['engine'])){
+			$sql .= " AND p2y.engine_id = '" . $this->session->data['ymm']['engine'] . "'";
+			}
+			if(!empty($this->session->data['ymm']['year'])){
+			$sql .= " AND p2y.begin_year <= '" . $this->session->data['ymm']['year'] . "' AND p2y.end_year >= '" . $this->session->data['ymm']['year'] . "'";
+			}
+			$sql .= ") OR p.universal = '1')";
+			}]]></add>
+		</operation>
+	</file>
+	<file name="catalog/model/catalog/product.php">
+		<operation>
+			<search position="before"><![CDATA[public function updateViewed($product_id) {]]></search>
+			<add><![CDATA[	protected $ymm_cache;
+	protected $ymm_where;
+
+	public function __construct($registry) 
+	{
+		parent::__construct($registry);
+		$this->ymm_cache = $this->setYmmCache();
+		$this->ymm_where = $this->setYmmWhere();
+	}
+
+	private function setYmmCache()
+	{
+		$ymm_cache = '';
+		if(isset($this->session->data['ymm'])){
+			$ymm_cache .= '.' . (int)$this->session->data['ymm']['make'];
+			if(!empty($this->session->data['ymm']['model'])){
+				$ymm_cache .= '.' . (int)$this->session->data['ymm']['model'];
+			}
+			if(!empty($this->session->data['ymm']['engine'])){
+				$ymm_cache .= '.' . (int)$this->session->data['ymm']['engine'];
+			}
+			if(!empty($this->session->data['ymm']['year'])){
+				$ymm_cache .= '.' . (int)$this->session->data['ymm']['year'];
+			}
+		}
+		return $ymm_cache;
+	}
+
+	private function setYmmWhere()
+	{
+		$ymm_where = '';
+		if(isset($this->session->data['ymm'])){
+			$ymm_where .= "(p.product_id IN (SELECT p2y.product_id FROM " . DB_PREFIX . "product_to_ymm p2y WHERE p2y.make_id = '" . $this->session->data['ymm']['make'] . "'";
+			if(!empty($this->session->data['ymm']['model'])){
+				$ymm_where .= " AND p2y.model_id = '" . $this->session->data['ymm']['model'] . "'";
+			}
+			if(!empty($this->session->data['ymm']['engine'])){
+				$ymm_where .= " AND p2y.engine_id = '" . $this->session->data['ymm']['engine'] . "'";
+			}
+			if(!empty($this->session->data['ymm']['year'])){
+				$ymm_where .= " AND p2y.begin_year <= '" . $this->session->data['ymm']['year'] . "' AND p2y.end_year >= '" . $this->session->data['ymm']['year'] . "'";
+			}
+			$ymm_where .= ")";
+			if(($this->config->get('ymmfilter_search_universal') == '1') || ($this->request->get['route'] != 'product/search')) {
+				$ymm_where .= " OR p.product_id IN (SELECT p2.product_id FROM " . DB_PREFIX . "product p2 WHERE p2.universal = '1')";
+			}
+			$ymm_where .= ") AND ";
+
+		}
+		return $ymm_where;
+	}
+]]></add>
+		</operation>
+		<operation error="skip">
+			<search position="replace"><![CDATA['.' . $cache]]></search>
+			<add><![CDATA[$this->ymm_cache . '.' . $cache]]></add>
+		</operation>
+		<operation>
+			<search position="replace"><![CDATA[WHERE pd.language_id]]></search>
+			<add><![CDATA[WHERE " . $this->ymm_where . "pd.language_id]]></add>
+		</operation>
+		<operation>
+			<search position="replace"><![CDATA[WHERE p.status = '1']]></search>
+			<add><![CDATA[WHERE " . $this->ymm_where . "p.status = '1']]></add>
+		</operation>
+		<operation error="skip">
+			<search position="replace"><![CDATA['.' . (int)$limit]]></search>
+			<add><![CDATA[$this->ymm_cache . '.' . (int)$limit]]></add>
+		</operation>
+		<operation error="skip">
+			<search position="replace"><![CDATA['.' . $limit]]></search>
+			<add><![CDATA[$this->ymm_cache . '.' . $limit]]></add>
+		</operation>
+		<operation error="skip">
+			<search position="replace"><![CDATA['.' . $customer_group_id]]></search>
+			<add><![CDATA[$this->ymm_cache . '.' . $customer_group_id]]></add>
+		</operation>
+	</file>
+	<file name="admin/controller/common/header.php">
+		<operation>
+			<search position="after"><![CDATA[$this->data['text_product']]]></search>
+			<add><![CDATA[$this->data['text_makemodel'] = $this->language->get('text_makemodel');
+				$this->data['text_ymmexport'] = $this->language->get('text_ymmexport');]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[$this->data['product']]]></search>
+			<add><![CDATA[$this->data['makemodel'] = $this->url->link('catalog/makemodel', 'token=' . $this->session->data['token'], 'SSL');
+			$this->data['ymmexport'] = $this->url->link('catalog/ymmexport', 'token=' . $this->session->data['token'], 'SSL');]]></add>
+		</operation>
+	</file>
+	<file name="admin/language/*/common/header.php">
+		<operation>
+			<search position="after"><![CDATA[$_['text_product']]]></search>
+			<add><![CDATA[$_['text_makemodel']				   = 'Edit Make/Model';
+			$_['text_ymmexport'] = 'YMM Export';]]></add>
+		</operation>
+	</file>
+	<file name="admin/view/template/common/header.tpl">
+		<operation>
+			<search position="after"><![CDATA[$product]]></search>
+			<add><![CDATA[<li><a href="<?php echo $makemodel; ?>"><?php echo $text_makemodel; ?></a></li>
+			<li><a href="<?php echo $ymmexport; ?>"><?php echo $text_ymmexport; ?></a></li>]]></add>
+		</operation>
+	</file>
+	<file name="admin/view/template/catalog/product_form.tpl">
+		<operation>
+			<search position="replace"><![CDATA[<?php echo $tab_option; ?></a>]]></search>
+			<add><![CDATA[<?php echo $tab_option; ?></a><a href="#tab-ymm"><?php echo $tab_ymm; ?></a>]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[<div id="tab-discount">]]></search>
+			<add><![CDATA[<div id="tab-ymm">
+          <div>
+		  	<?php if($universal == 1){ ?>
+				<input id="uniCheck" name="universal" type="checkbox" value="1" checked="checked" />
+			<?php } else { ?>
+				<input id="uniCheck" name="universal" type="checkbox" value="1" />
+			<?php } ?>
+			<?php echo $entry_universal; ?>
+		  </div>
+		  <script type="text/javascript">
+		  	$('#uniCheck').change(function(){
+				if($('#uniCheck').is(':checked')){
+					$('#ymm').slideUp('fast');
+				} else {
+					$('#ymm').slideDown('fast');
+				}
+			});
+		  </script>
+		  <?php if($universal == 1){ ?>
+		  <table id="ymm" class="list" style="display: none;">
+		  <?php } else { ?>
+		  <table id="ymm" class="list">
+		  <?php } ?>
+            <thead>
+              <tr>
+                <td class="left"><?php echo $entry_make; ?></td>
+                <?php if($this->config->get('ymmfilter_model')) { ?>
+				<td class="left"><?php echo $entry_model; ?></td>
+				<?php }
+				if($this->config->get('ymmfilter_engine')) { ?>
+				<td class="left"><?php echo $entry_engine; ?></td>
+                <?php }
+				if($this->config->get('ymmfilter_year')) { ?>
+				<td class="left"><?php echo $entry_beg_year; ?></td>
+				<td class="left"><?php echo $entry_end_year; ?></td>
+				<?php } ?>
+                <td></td>
+              </tr>
+            </thead>
+            <?php $ymm_row = 0; ?>
+            <?php foreach ($product_ymms as $product_ymm) { ?>
+            <tbody id="ymm-row<?php echo $ymm_row; ?>">
+              <tr>
+                <td class="left"><input type="text" name="product_ymm[<?php echo $ymm_row; ?>][make]" value="<?php echo $product_ymm['make']; ?>" /></td>
+                <?php if($this->config->get('ymmfilter_model')) { ?>
+				<td class="left"><input type="text" name="product_ymm[<?php echo $ymm_row; ?>][model]" value="<?php echo $product_ymm['model']; ?>" /></td>
+				<?php }
+				if($this->config->get('ymmfilter_engine')) { ?>
+				<td class="left"><input type="text" name="product_ymm[<?php echo $ymm_row; ?>][engine]" value="<?php echo $product_ymm['engine']; ?>" /></td>
+                <?php }
+				if($this->config->get('ymmfilter_year')) { ?>
+				<td class="left"><input type="text" name="product_ymm[<?php echo $ymm_row; ?>][begin_year]" value="<?php echo $product_ymm['begin_year']; ?>" size="4" /></td>
+                <td class="left"><input type="text" name="product_ymm[<?php echo $ymm_row; ?>][end_year]" value="<?php echo $product_ymm['end_year']; ?>" size="4" /></td>
+				<?php } ?>
+                <td class="left"><a onclick="$('#ymm-row<?php echo $ymm_row; ?>').remove();" class="button"><span><?php echo $button_remove; ?></span></a></td>
+              </tr>
+            </tbody>
+            <?php $ymm_row++; ?>
+            <?php } ?>
+            <tfoot>
+              <tr>
+                <?php
+				$colspan = 1;
+				if($this->config->get('ymmfilter_model')){
+					$colspan = $colspan + 1;
+				}
+				if($this->config->get('ymmfilter_engine')){
+					$colspan = $colspan + 1;
+				}
+				if($this->config->get('ymmfilter_year')){
+					$colspan = $colspan + 2;
+				}
+				?>
+				<td colspan="<?php echo $colspan; ?>"></td>
+                <td class="left"><a onclick="addYMM();" class="button"><span><?php echo $button_add_ymm; ?></span></a></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[view/javascript/ckeditor/ckeditor.js]]></search>
+			<add><![CDATA[<script type="text/javascript">
+$('.yearend').live('keydown', function(e){
+	var keyCode = e.keyCode || e.which;
+	
+	if(keyCode == 9){
+		e.preventDefault();
+		addYMM();
+	}
+});
+function makeComplete(){
+	$('.make').autocomplete({
+		source: "<?php echo html_entity_decode($make_complete_url); ?>",
+		minLength: 2,
+		autoFocus: true
+	});
+}
+function modelComplete(){
+	$('.model').autocomplete({
+		source: "<?php echo html_entity_decode($model_complete_url); ?>",
+		minLength: 2,
+		autoFocus: true
+	});
+}
+function engineComplete(){
+	$('.engine').autocomplete({
+		source: "<?php echo html_entity_decode($engine_complete_url); ?>",
+		minLength: 2,
+		autoFocus: true
+	});
+}
+</script>]]></add>
+		</operation>
+		<operation>
+			<search position="before" offset="1"><![CDATA[var discount_row =]]></search>
+			<add><![CDATA[<script type="text/javascript">
+var ymm_row = <?php echo $ymm_row; ?>;
+
+function addYMM() {
+	html  = '<tbody id="ymm-row' + ymm_row + '">';
+	html += '  <tr>'; 
+    html += '    <td class="left"><input type="text" class="make" name="product_ymm[' + ymm_row + '][make]" value="" /></td>';
+	<?php if($this->config->get('ymmfilter_model')) { ?>
+    html += '    <td class="left"><input type="text" class="model" name="product_ymm[' + ymm_row + '][model]" value="" /></td>';
+	<?php }
+	if($this->config->get('ymmfilter_engine')) { ?>
+	html += '    <td class="left"><input type="text" class="engine" name="product_ymm[' + ymm_row + '][engine]" value="" /></td>';
+	<?php }
+	if($this->config->get('ymmfilter_year')) { ?>
+	html += '    <td class="left"><input type="text" name="product_ymm[' + ymm_row + '][begin_year]" value="" size="4" /></td>';
+    html += '    <td class="left"><input type="text" class="yearend" name="product_ymm[' + ymm_row + '][end_year]" value="" size="4" /></td>';
+	<?php } ?>
+	html += '    <td class="left"><a onclick="$(\'#ymm-row' + ymm_row + '\').remove();" class="button"><span><?php echo $button_remove; ?></span></a></td>';
+	html += '  </tr>';	
+    html += '</tbody>';
+	
+	$('#ymm tfoot').before(html);
+	
+	makeComplete();
+	modelComplete();
+	engineComplete();
+	
+	$('.make').last().focus();
+		
+	ymm_row++;
+}
+</script>]]></add>
+		</operation>
+	</file>
+	<file name="admin/controller/catalog/product.php">
+		<operation>
+			<search position="after"><![CDATA[$this->data['entry_layout']]]></search>
+			<add><![CDATA[$this->data['entry_make'] = $this->language->get('entry_make');
+		$this->data['entry_model'] = $this->language->get('entry_model');
+		$this->data['entry_beg_year'] = $this->language->get('entry_beg_year');
+		$this->data['entry_end_year'] = $this->language->get('entry_end_year');
+		$this->data['entry_engine'] = $this->language->get('entry_engine');
+		$this->data['entry_universal'] = $this->language->get('entry_universal');
+				
+    	$this->data['button_add_ymm'] = $this->language->get('button_add_ymm');]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[$this->data['tab_option']]]></search>
+			<add><![CDATA[$this->data['tab_ymm'] = $this->language->get('tab_ymm');]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[$this->data['tab_design']]]></search>
+			<add><![CDATA[$this->data['make_complete_url'] =  $this->url->link('catalog/makemodel/completemake', 'token=' . $this->session->data['token'], 'SSL');
+		$this->data['model_complete_url'] =  $this->url->link('catalog/makemodel/completemodel', 'token=' . $this->session->data['token'], 'SSL');
+		$this->data['engine_complete_url'] =  $this->url->link('catalog/makemodel/completeengine', 'token=' . $this->session->data['token'], 'SSL');]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[if (isset($this->request->post['product_discount'])) {]]></search>
+			<add><![CDATA[if (isset($this->request->post['product_ymms'])) {
+			$this->data['product_ymms'] = $this->request->post['product_ymms'];
+		} elseif (isset($product_info)) {
+			$this->data['product_ymms'] = $this->model_catalog_product->getProductYMM($this->request->get['product_id']);
+		} else {
+			$this->data['product_ymms'] = array();
+		}
+		
+		if (isset($this->request->post['universal'])){
+			$this->data['universal'] = $this->request->post['universal'];
+		} elseif (isset($product_info)) {
+			$this->data['universal'] = $product_info['universal'];
+		} else {
+			if($this->config->get('ymmfilter_uni_default')){
+				$this->data['universal'] = 1;
+			} else {
+				$this->data['universal'] = 0;
+			}
+		}]]></add>
+		</operation>
+	</file>
+	<file name="admin/language/*/catalog/product.php">
+		<operation>
+			<search position="after"><![CDATA[$_['entry_layout']]]></search>
+			<add><![CDATA[$_['entry_make']		 	 = 'Make:';
+$_['entry_model']			 = 'Model:';
+$_['entry_engine']			 = 'Engine:';
+$_['entry_beg_year']		 = 'First Year:';
+$_['entry_end_year']		 = 'Last Year:';
+$_['entry_universal']		 = 'Universal Product';
+$_['button_add_ymm']		 = 'Add Year/Make/Model';
+$_['tab_ymm']				 = 'YMM';]]></add>
+		</operation>
+	</file>
+	<file name="admin/model/catalog/product.php">
+		<operation>
+			<search position="after"><![CDATA[public function addProduct($data) {]]></search>
+			<add><![CDATA[if(!isset($data['universal'])){ $data['universal'] = 0; }]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[public function editProduct($product_id, $data) {]]></search>
+			<add><![CDATA[if(!isset($data['universal'])){ $data['universal'] = 0; }]]></add>
+		</operation>
+		<operation>
+			<search position="replace"><![CDATA[sort_order = '" . (int)$data['sort_order'] . "']]></search>
+			<add><![CDATA[sort_order = '" . (int)$data['sort_order'] . "', universal = '" . (int)$data['universal'] . "']]></add>
+		</operation>
+		<operation>
+			<search position="before" index="1"><![CDATA[if (isset($data['product_discount'])) {]]></search>
+			<add><![CDATA[if (isset($data['product_ymm'])) {
+	foreach ($data['product_ymm'] as $value) {
+		$make_check_query = $this->db->query("SELECT id FROM " . DB_PREFIX . "make WHERE make = '" . $this->db->escape($value['make']) . "'");
+		if($make_check_query->num_rows){
+			$make_id = $make_check_query->row['id'];
+		} else {
+			$this->db->query("INSERT INTO " . DB_PREFIX . "make SET make = '" . $this->db->escape($value['make']) . "'");
+			$make_id = $this->db->getLastId();
+		}
+				
+		if(isset($value['model'])){
+			$model_check_query = $this->db->query("SELECT id FROM " . DB_PREFIX . "model WHERE model = '" . $this->db->escape($value['model']) . "'");
+			if($model_check_query->num_rows){
+				$model_id = $model_check_query->row['id'];
+			} else {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "model SET model = '" . $this->db->escape($value['model']) . "'");
+				$model_id = $this->db->getLastId();
+			}
+		} else {
+			$model_id = 0;
+		}
+		
+		if(isset($value['engine'])){
+			$engine_check_query = $this->db->query("SELECT id FROM `" . DB_PREFIX . "engine` WHERE `engine` = '" . $this->db->escape($value['engine']) . "'");
+			if($engine_check_query->num_rows){
+				$engine_id = $engine_check_query->row['id'];
+			} else {
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "engine` SET `engine` = '" . $this->db->escape($value['engine']) . "'");
+				$engine_id = $this->db->getLastId();
+			}
+		} else {
+			$engine_id = 0;
+		}
+		
+		if(isset($value['begin_year'])){
+			$begin_year = $value['begin_year'];
+		} else {
+			$begin_year = 0;
+		}
+				
+		if(isset($value['end_year'])){
+			$end_year = $value['end_year'];
+		} else {
+			$end_year = 0;
+		}
+				
+		$this->db->query("INSERT INTO " . DB_PREFIX . "product_to_ymm SET product_id = '" . (int)$product_id . "', make_id = '" . $make_id . "', model_id = '" . $model_id . "', engine_id = '" . $engine_id . "', begin_year = '" . $begin_year . "', end_year = '" . $end_year . "'");
+	}
+}]]></add>
+		</operation>
+		<operation>
+			<search position="before" index="1"><![CDATA[$this->db->query("DELETE FROM " . DB_PREFIX . "product_discount WHERE product_id = '" . (int)$product_id . "'");]]></search>
+			<add><![CDATA[$this->db->query("DELETE FROM " . DB_PREFIX . "product_to_ymm WHERE product_id = '" . (int)$product_id . "'");
+		
+		if (isset($data['product_ymm'])) {
+	foreach ($data['product_ymm'] as $value) {
+		$make_check_query = $this->db->query("SELECT id FROM " . DB_PREFIX . "make WHERE make = '" . $this->db->escape($value['make']) . "'");
+		if($make_check_query->num_rows){
+			$make_id = $make_check_query->row['id'];
+		} else {
+			$this->db->query("INSERT INTO " . DB_PREFIX . "make SET make = '" . $this->db->escape($value['make']) . "'");
+			$make_id = $this->db->getLastId();
+		}
+				
+		if(isset($value['model'])){
+			$model_check_query = $this->db->query("SELECT id FROM " . DB_PREFIX . "model WHERE model = '" . $this->db->escape($value['model']) . "'");
+			if($model_check_query->num_rows){
+				$model_id = $model_check_query->row['id'];
+			} else {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "model SET model = '" . $this->db->escape($value['model']) . "'");
+				$model_id = $this->db->getLastId();
+			}
+		} else {
+			$model_id = 0;
+		}
+		
+		if(isset($value['engine'])){
+			$engine_check_query = $this->db->query("SELECT id FROM `" . DB_PREFIX . "engine` WHERE `engine` = '" . $this->db->escape($value['engine']) . "'");
+			if($engine_check_query->num_rows){
+				$engine_id = $engine_check_query->row['id'];
+			} else {
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "engine` SET `engine` = '" . $this->db->escape($value['engine']) . "'");
+				$engine_id = $this->db->getLastId();
+			}
+		} else {
+			$engine_id = 0;
+		}
+		
+		if(isset($value['begin_year'])){
+			$begin_year = $value['begin_year'];
+		} else {
+			$begin_year = 0;
+		}
+				
+		if(isset($value['end_year'])){
+			$end_year = $value['end_year'];
+		} else {
+			$end_year = 0;
+		}
+				
+		$this->db->query("INSERT INTO " . DB_PREFIX . "product_to_ymm SET product_id = '" . (int)$product_id . "', make_id = '" . $make_id . "', model_id = '" . $model_id . "', engine_id = '" . $engine_id . "', begin_year = '" . $begin_year . "', end_year = '" . $end_year . "'");
+	}
+}]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[$data = array_merge($data, array('product_description' => $this->getProductDescriptions($product_id)));]]></search>
+			<add><![CDATA[$data = array_merge($data, array('product_ymm' => $this->getProductYMM($product_id)));]]></add>
+		</operation>
+		<operation>
+			<search position="after" index="2"><![CDATA[$this->db->query("DELETE FROM " . DB_PREFIX . "product_description WHERE product_id = '" . (int)$product_id . "'");]]></search>
+			<add><![CDATA[$this->db->query("DELETE FROM " . DB_PREFIX . "product_to_ymm WHERE product_id = '" . (int)$product_id . "'");]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[public function getProductDiscounts($product_id) {]]></search>
+			<add><![CDATA[public function getProductYMM($product_id) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_to_ymm WHERE product_id = '" . (int)$product_id . "' ORDER BY make_id, model_id, engine_id, begin_year, end_year");
+		
+		$ymm_data = array();
+		
+		foreach($query->rows as $ymm){
+			
+			$make_query = $this->db->query("SELECT make FROM " . DB_PREFIX . "make WHERE id = '" . $ymm['make_id'] . "'");
+			$make = $make_query->row['make'];
+			
+			$model_query = $this->db->query("SELECT model FROM " . DB_PREFIX . "model WHERE id = '" . $ymm['model_id'] . "'");
+			if($model_query->num_rows){
+			$model = $model_query->row['model'];
+			} else {
+			$model = '';
+			}
+			
+			$engine_query = $this->db->query("SELECT `engine` FROM `" . DB_PREFIX . "engine` WHERE id = '" . $ymm['engine_id'] . "'");
+			if($engine_query->num_rows){
+			$engine = $engine_query->row['engine'];
+			} else {
+			$engine = '';
+			}
+			
+			$ymm_data[] = array(
+				'make' => $make,
+				'model' => $model,
+				'begin_year' => $ymm['begin_year'],
+				'end_year' => $ymm['end_year'],
+				'engine' => $engine
+			);
+		}
+		
+		return $ymm_data;
+	}]]></add>
+		</operation>
+	</file>
+</modification>

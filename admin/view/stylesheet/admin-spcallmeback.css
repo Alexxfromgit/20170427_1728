@@ -1,0 +1,9 @@
+table.form input[type="text"]
+{
+  width: 300px;
+}
+
+table.form input[size="2"]
+{
+  width: 20px;
+}

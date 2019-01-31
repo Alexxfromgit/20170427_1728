@@ -1,0 +1,12 @@
+<IfModule mod_php5.c>
+	php_flag short_open_tag on
+</IfModule>
+
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	#RewriteBase /autoparts/
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-l
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^(.*)$ index.php [L]
+</IfModule>

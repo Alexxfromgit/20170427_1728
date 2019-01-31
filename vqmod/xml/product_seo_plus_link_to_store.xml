@@ -1,0 +1,30 @@
+
+<!--
+/*******************************************************************************
+*                                 Opencart SEO Pack                            *
+*                             Copyright : Ovidiu Fechete                       *
+*                              email: ovife21@gmail.com                        *
+*                Below source-code or any part of the source-code              *
+*                          cannot be resold or distributed.                    *
+*******************************************************************************/
+-->
+
+<modification>
+
+	<id>Product SEO Plus Link to Store</id>
+	<version>1.0.0</version>
+	<vqmver>2.1.5</vqmver>
+	<author>ovife21</author>
+	
+	<file name="catalog/controller/common/footer.php">
+		<operation>
+		<search position="replace"><![CDATA[
+		$this->data['powered'] = sprintf($this->language->get('text_powered'), $this->config->get('config_name'), date('Y', time()));
+		]]></search>
+		<add><![CDATA[
+		$this->data['powered'] = sprintf($this->language->get('text_powered'), '<a href="'.$this->config->get('config_url').'">'.$this->config->get('config_name').'</a>', date('Y', time()));
+		]]></add>
+		</operation>
+	</file>
+	
+</modification>

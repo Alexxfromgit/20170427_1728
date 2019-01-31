@@ -1,0 +1,60 @@
+User-agent: *
+Disallow: /index.php?route=affiliate/login
+Disallow: /index.php?route=account
+Disallow: /index.php?route=checkout/cart
+Disallow: /index.php?route=checkout/simplecheckout
+Disallow: /index.php?route=common/home
+Disallow: /index.php?route=product/product/captcha
+Disallow: /index.php?route=product/search
+Disallow: /index.php?route=product/compare
+Disallow: /index.php?route=information/contact/captcha
+Disallow: /index.php?route=product/manufacturer
+Disallow: /admin
+Disallow: /download
+Disallow: /special
+Disallow: /contact
+Disallow: /wishlist
+Disallow: /account
+Disallow: /*?filter_ocfilter=
+Disallow: /*props.php
+Disallow: /autoparts/apps.php?of=
+Disallow: /*?page=
+Disallow: /*&page=
+Disallow: /*?limit=
+Disallow: /*?sort=
+Disallow: /*?product_id=
+Disallow: /oil/*
+
+Allow: /index.php?route=account/simpleregister
+
+User-agent: Yandex
+Disallow: /index.php?route=affiliate/login
+Disallow: /index.php?route=account
+Disallow: /index.php?route=checkout/cart
+Disallow: /index.php?route=checkout/simplecheckout
+Disallow: /index.php?route=common/home
+Disallow: /index.php?route=product/product/captcha
+Disallow: /index.php?route=product/search
+Disallow: /index.php?route=product/compare
+Disallow: /index.php?route=information/contact/captcha
+Disallow: /index.php?route=product/manufacturer
+Disallow: /admin
+Disallow: /download
+Disallow: /special
+Disallow: /contact
+Disallow: /wishlist
+Disallow: /account
+Disallow: /*?filter_ocfilter=
+Disallow: /*props.php
+Disallow: /autoparts/apps.php?of=
+Disallow: /*?page=
+Disallow: /*&page=
+Disallow: /*?limit=
+Disallow: /*?sort=
+Disallow: /*?product_id=
+Disallow: /oil/*
+
+Allow: /index.php?route=account/simpleregister
+
+Host: technoride.com.ua
+Sitemap:http://technoride.com.ua/sitemap.xml

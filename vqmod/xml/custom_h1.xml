@@ -1,0 +1,133 @@
+
+<!--
+/*******************************************************************************
+*                                 Opencart SEO Pack                            *
+*                             Copyright : Ovidiu Fechete                       *
+*                              email: ovife21@gmail.com                        *
+*                Below source-code or any part of the source-code              *
+*                          cannot be resold or distributed.                    *
+*******************************************************************************/
+-->
+
+<modification>
+
+	<id>Custom h1s</id>
+	<version>1.0.0</version>
+	<vqmver>2.1.5</vqmver>
+	<author>ovife21</author>
+	
+	<file name="admin/language/*/catalog/product.php">
+		<operation>
+			<search position="before"><![CDATA[$_['entry_name']]]></search>
+			<add><![CDATA[$_['entry_custom_h1']            = 'Custom H1:<br/><span class="help">Leave empty if you want the default header to be displayed</span>';]]></add>
+		</operation>			
+	</file>		
+	<file name="admin/view/template/catalog/product_form.tpl">
+		<operation>
+			<search position="before"><![CDATA[<td><?php echo $entry_meta_description; ?></td>]]></search>
+			<add><![CDATA[<td><?php echo $entry_custom_h1; ?></td>
+			<td><input type="text" name="product_description[<?php echo $language['language_id']; ?>][custom_h1]" size="100" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['custom_h1'] : ''; ?>" /></td>
+              </tr>
+              <tr>]]></add>
+		</operation>			
+	</file>	
+	<file name="catalog/model/catalog/product.php">
+		<operation error="skip">
+			<search position="replace"><![CDATA[$query->row['meta_keyword'],]]></search>
+			<add><![CDATA[$query->row['meta_keyword'], 'custom_h1' => $query->row['custom_h1'],]]></add>
+		</operation>							
+	</file>		
+	<file name="admin/model/catalog/product.php">
+		<operation>
+			<search position="replace"><![CDATA['meta_description' => $result['meta_description']]]></search>
+			<add><![CDATA['custom_h1' => $result['custom_h1'], 'meta_description' => $result['meta_description']]]></add>
+		</operation>
+		<operation>
+			<search position="replace"><![CDATA[meta_description = '" . $this->db->escape($value['meta_description']) . "',]]></search>
+			<add><![CDATA[custom_h1 = '" . ((isset($value['custom_h1']))?($this->db->escape($value['custom_h1'])):'') . "', meta_description = '" . $this->db->escape($value['meta_description']) . "',]]></add>
+		</operation>			
+	</file>
+	<file name="admin/controller/catalog/product.php">
+		<operation>
+			<search position="before"><![CDATA[$this->data['entry_meta_description'] = $this->language->get('entry_meta_description');]]></search>
+			<add><![CDATA[$this->data['entry_custom_h1'] = $this->language->get('entry_custom_h1');]]></add>
+		</operation>		
+		<operation>
+			<search position="before"><![CDATA[if (isset($this->error['meta_description'])) {]]></search>
+			<add><![CDATA[if (isset($this->error['custom_h1'])) {
+					$this->data['error_custom_h1'] = $this->error['custom_h1'];
+				} else {
+					$this->data['error_custom_h1'] = array();
+				}	]]></add>
+		</operation>			
+	</file>	
+	<file name="catalog/controller/product/product.php">
+		<operation>
+			<search position="replace" error="skip"><![CDATA[$this->data['heading_title'] = $product_info['name'];]]></search>
+			<add><![CDATA[$this->data['heading_title'] = ($product_info['custom_h1'] <> '')?$product_info['custom_h1']:$product_info['name'];]]></add>
+		</operation>		
+	</file>	
+	<file name="admin/view/template/catalog/seopack.tpl">
+		<operation>
+			<search position="before"><![CDATA[<p><a onclick="clearseo('Products Tags', '<?php echo $cleartags; ?>');" class="button" style="background:red">Clear Tags</a></p>]]></search>
+			<add><![CDATA[<p><a onclick="clearseo('Product Custom H1s', '<?php echo $clearh1s; ?>');" class="button" style="background:red">Clear Custom H1s</a></p>]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[<td class="left"><b>Tags Generator</b></td>]]></search>
+			<add><![CDATA[<td class="left"><b>Product Custom H1 Generator</b></td>
+                <td class="left"><span class="help">Product Custom H1 Generator generates custom h1s for products from relevant keywords from product(%p) and category(%c) names.<br><br>
+				<b>Parameters</b><br>
+				There are available the following parameters and they will be replaced by their actual value: <b>%p</b> - product's name, <b>%c</b> - category's name, <b>%m</b> - model, <b>%s</b> - product's sku, <b>%u</b> - product's upc, <b>%b</b> - product's brand and <b>%$</b> - product's price.<br>
+				<b>Example: %p (%m) by www.mysite.com</b> - will generate the following cutom h1 for a product called 'iPod' with model = 'iPod4': <b>iPod (iPod4) by www.mysite.com</b>.<br>				
+				<i>Before generating custom h1s, if you have modified parameters, don't forget to save them using Save Parameters button.</i>	
+				</span></td>
+                <td class="left"><input type="text" name="parameters[ch1s]" value="<?php if (isset($parameters['ch1s'])) echo $parameters['ch1s'];?>" size="10"/></td>
+                <td class="right">
+					<?php if (file_exists(DIR_APPLICATION.'custom_h1_generator.php')) { ?>
+					<a onclick="location = 'custom_h1_generator.php?token=<?php echo $this->session->data['token']; ?>'" class="button">Generate</a>
+					<?php } else { ?>
+					<a onclick="alert('Custom H1s Generator is not installed!\nYou can purchase the whole Opencart SEO Pack PRO:\n http://www.opencart.com/index.php?route=extension/extension/info&extension_id=6182');" class="button" style="background:lightgrey">Generate</a>
+					<?php } ?>
+				</td>
+              </tr>
+            </tbody>
+			
+			<tbody>
+              <tr>]]></add>
+		</operation>		
+	</file>	
+	<file name="admin/controller/catalog/seopack.php">
+		<operation>
+			<search position="before"><![CDATA[public function cleartags() {]]></search>
+			<add><![CDATA[public function clearh1s() {
+	
+		$query = $this->db->query("update " . DB_PREFIX . "product_description set custom_h1 = '';");
+		
+		$this->session->data['success'] = "Custom h1s were deleted.";
+		
+		$this->redirect($this->url->link('catalog/seopack', 'token=' . $this->session->data['token'], 'SSL'));
+	
+			}]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[$this->data['cleartags']]]></search>
+			<add><![CDATA[
+			$this->data['clearh1s'] = $this->url->link('catalog/seopack/clearh1s', 'token=' . $this->session->data['token'], 'SSL');
+			]]></add>
+		</operation>
+	</file>	
+	<file name="admin/controller/common/header.php">
+		<operation>
+			<search position="before"><![CDATA[$this->data['heading_title']]]></search>
+			<add><![CDATA[
+			$query = $this->db->query("SHOW COLUMNS FROM " . DB_PREFIX . "product_description WHERE field = 'custom_h1'");
+			$exists = 0;
+			foreach ($query->rows as $index) {$exists++;}
+			if (!$exists) {$this->db->query("ALTER TABLE " . DB_PREFIX . "product_description ADD COLUMN `custom_h1` varchar(255) NULL DEFAULT '';");}
+			]]></add>
+		</operation>		
+	</file>	
+	
+
+</modification>
+

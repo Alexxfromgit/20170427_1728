@@ -1,0 +1,82 @@
+<!-- vQmod XML Generator by UKSB - http://www.opencart-extensions.co.uk //-->
+<modification>
+	<id>Vehicles on product page</id>
+	<version>2.17.0</version>
+	<vqmver>2.3.0</vqmver>
+	<author>Spot On Solutions http://spotonsolutions.net</author>
+	<file name="catalog/controller/product/product.php">
+		<operation>
+			<search position="before"><![CDATA[$this->load->model('catalog/product');]]></search>
+			<add><![CDATA[if($product_id != 0){
+			$this->load->model('module/ymmfilter');
+			$this->data['vehicles'] = $this->model_module_ymmfilter->getVehicles((int)$product_id);	
+			$this->data['tab_vehicle'] = $this->language->get('tab_vehicle');
+			$this->data['text_make'] = $this->language->get('text_make');
+			$this->data['text_engine'] = $this->language->get('text_engine');
+			$this->data['text_model'] = $this->language->get('text_model');
+			$this->data['text_years'] = $this->language->get('text_years');
+		}
+		]]></add>
+		</operation>
+	</file>
+	<file name="catalog/language/english/product/product.php">
+		<operation>
+			<search position="after"><![CDATA[$_['text_error']]]></search>
+			<add><![CDATA[$_['text_make']			= 'Make';
+$_['text_model']		= 'Model';
+$_['text_engine']		= 'Engine';
+$_['text_years']		= 'Years';]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[$_['tab_related']]]></search>
+			<add><![CDATA[$_['tab_vehicle']		= 'Vehicles';]]></add>
+		</operation>
+	</file>
+	<file name="catalog/view/theme/*/template/product/product.tpl">
+		<operation>
+			<search position="before" index="1"><![CDATA[<?php if ($attribute_groups) { ?>]]></search>
+			<add><![CDATA[<?php if ($vehicles && $vehicles != 'universal') { ?>
+	<a href="#tab-vehicle"><?php echo $tab_vehicle; ?></a>
+	<?php } ?>]]></add>
+		</operation>
+		<operation>
+			<search position="before" index="2"><![CDATA[<?php if ($attribute_groups) { ?>]]></search>
+			<add><![CDATA[  <?php if ($vehicles && $vehicles != 'universal') { ?>
+  <div id="tab-vehicle" class="tab-content">
+	<table class="attribute">
+		<thead>
+		<tr>
+			<td><?php echo $text_make; ?></td>
+			<?php if($this->config->get('ymmfilter_model')) { ?>
+			<td><?php echo $text_model; ?></td>
+			<?php }
+				if($this->config->get('ymmfilter_engine')) { ?>
+			<td><?php echo $text_engine; ?></td>
+			<?php }
+				if($this->config->get('ymmfilter_year')) { ?>
+			<td><?php echo $text_years; ?></td>
+			<?php } ?>
+		</tr>
+		</thead>
+		<tbody>
+	<?php foreach ($vehicles as $vehicle){ ?>
+		<tr>
+			<td><?php echo $vehicle['make']; ?></td>
+			<?php if($this->config->get('ymmfilter_model')) { ?>
+			<td><?php echo $vehicle['model']; ?></td>
+			<?php }
+				if($this->config->get('ymmfilter_engine')) { ?>
+			<td><?php echo $vehicle['engine']; ?></td>
+			<?php }
+				if($this->config->get('ymmfilter_year')) { ?>
+			<td><?php echo $vehicle['begin_year'] . ' - ' . $vehicle['end_year']; ?></td>
+			<?php } ?>
+		</tr>	
+	<?php } ?>
+		</tbody>
+	</table>
+  </div>
+  <?php } ?>]]></add>
+		</operation>
+	</file>
+</modification>

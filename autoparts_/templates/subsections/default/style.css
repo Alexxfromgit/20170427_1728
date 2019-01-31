@@ -1,0 +1,89 @@
+.rsecs { 
+  border: 1px solid #e3e3e3;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px; 
+  margin-right: 19px;
+  padding: 15px 17px;
+  width: 260px;
+}
+.rseclinks a { 
+	display:block; 
+	padding:6px 0 6px 20px; 
+	background: url(images/arrows-01.png) no-repeat 0 12px;
+	line-height: 1.3em;
+	color: #000;
+	font-size: 15px;
+}
+.rseclinks a.rsactive {
+	background-position: 0 -18px;
+	font-weight: 400;
+	color: #275791;
+}
+
+.rsactive{font-weight:bold;}
+
+#subsections a{color:#0057A3;}
+#subsections a:hover{color:#CC6D00; text-decoration:none;}
+#subsections .shead{
+	background-color: #f3f3f3;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border: 1px solid #e5e5e5;
+	padding: 10px 12px;
+	margin-top: 4px !important;
+	font-size: 15px !important;
+}
+#subsections .shead {
+	background: url(images/arrow-01.png) no-repeat 97% 50% #f3f3f3;
+}
+#subsections .shead.ui-accordion-header-active {
+	background: url(images/arrow-02.png) no-repeat 97% 50% #fff;
+}
+.tdm_content h2 {
+  font-weight: 400;
+  font-size: 15px;
+  padding-top: 13px;
+}
+.logo2 {
+	float: left;
+	margin-right: 10px;
+}
+.logo2 img {
+	max-width: 100px;
+	height: auto;
+}
+.ui-widget {
+	font-family: "Ubuntu",sans-serif !important;
+}
+#subsections {
+	padding-top: 15px;
+}
+#subsections .ui-widget-content {
+	border-bottom: 1px solid #e5e5e5;
+	border-left: 1px solid #e5e5e5;
+	border-right: 1px solid #e5e5e5;
+	padding: 0 11px !important;
+	font-size: 15px;
+}
+
+#subsections .rtlink{
+	margin-left:18px;
+	padding: 0;
+	color: #555555;
+}
+.sbody{padding:5px 0px 20px 55px!important;}
+.sbody a{display:block;}
+.sbody a:hover{}
+.levl2{
+	background: url(images/arrows-01.png) no-repeat 1px 6px;
+	margin-bottom:10px;
+	padding-left: 20px;
+}
+.levl3{ padding: 0 0 9px 30px !important;}
+.levl3 a{display:inline-block!important;}
+
+.movedsec{background:url('images/moved.jpg'); width:16px; height:16px; display:inline-block;}
+
+.ignored_admin_note{margin:0px 0px 10px 0px; color:#ff0000;}

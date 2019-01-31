@@ -1,0 +1,44 @@
+/* CSS BLOCK #1 */
+.sirt{
+    list-style: none;
+	padding: 15px;
+	margin-left:20px;
+}
+ol{
+list-style: none;
+padding: 5px;
+display: inline-block;
+width: 11%;
+vertical-align: middle;
+}
+
+
+a.asy{
+font-size:15px;
+text-decoration: none;
+border-bottom: 1px dashed #5c2e88;
+color:#5c2e88;
+}
+a.asy:hover	{
+color:#5c2e88;
+border-bottom: none;
+font-weight: bold;
+ }
+a.asy:active {
+color: #000;
+}
+.podb{
+background-image: url(/image/data/img5.png);
+min-width:330px;
+height:300px;
+margin-left:600px;
+margin-top:-300px;
+}
+.qw{
+font-size:25px;
+border-bottom: 1px dashed #5c2e88;
+}
+.oilsh{
+margin-left:70px;
+
+}

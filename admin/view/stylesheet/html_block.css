@@ -1,0 +1,114 @@
+.js {
+	border-bottom: 1px dotted;
+	display: inline-block;
+	line-height: 1em;
+	height: 1em;
+	cursor: pointer;
+	background: none;
+	padding: 0;
+	position: relative;
+	text-decoration: none !important;
+	letter-spacing: -0.299px;
+}
+.js:hover {
+	border-color: transparent;
+}
+.show {
+	display:  block;
+}
+.hide {
+	display:  none;
+}
+.no-margin-bottom {
+	margin-bottom: 0 !important;
+}
+.theme-more {
+	position: relative;
+	top: -10px;
+	margin-bottom: -30px;
+}
+.theme-style {
+	position: relative;
+	top: -20px;
+}
+.html-block-content-content {
+	position: relative;
+}
+.html-block-content-content .live-view {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+.html-block-content-content textarea {
+	width: 100%;
+}
+.html-block-content-content .message {
+	height: 320px;
+	vertical-align: top
+}
+.html-block-content-content .help {
+	margin-bottom: 30px;
+}
+.html-block-content-content .help, 
+.help.id {
+	display: inline;
+}
+.html-block-content-content .link {
+	margin-top: 0;
+}
+td.html_block_id select {
+	width: 150px;
+}
+p.help {
+	margin: 0;
+	font-size: 0.9166em;
+}
+#vtabs a {
+	position: relative;
+}
+#vtabs a.selected img {
+	right: 15px;
+}
+#vtabs a b {
+	margin-right: 20px;
+	float: right;
+}
+#vtabs a img {
+	position: absolute;
+	right: 14px;
+	top: 50%;
+	margin-top: -8px;
+}
+table.list .title {
+	font-style: italic;
+	font-weight: bold;
+}
+#dialog {
+	padding: 3px 0px 0px 0px;
+	position: relative;
+}
+#dialog .throbber {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-left: -8px;
+	margin-top: -5px;
+	width: 16px;
+	height: 11px;
+	background: transparent url(../image/html_block/loader.gif) no-repeat 0 0;
+}
+.include {
+	padding: 0 !important;
+	border: 0;
+}
+.include .form {
+	margin: 0;
+}
+.parent td,
+.include .form, 
+.include .form td {
+	border-bottom: 0 !important;
+}
+.include .form td {
+	border-top: 1px dotted #CCCCCC;
+}

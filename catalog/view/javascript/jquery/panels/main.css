@@ -1,0 +1,47 @@
+/* -----------------------------------------------------
+// News Module for Opencart v1.5.5   							
+// Modified by villagedefrance                          			
+// contact@villagedefrance.net                         			
+//------------------------------------------------------
+*/
+
+/* panel */
+.panel, .panelcollapsed {
+	background: #F8F8F8;
+	margin: 0px 0px 10px 0px;
+	padding: 0px 0px 5px 0px;
+	width: 100%;
+	border: 1px solid #DBDEE1;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-box-shadow: 0px 2px 2px silver;
+	-moz-box-shadow: 0px 2px 2px silver;
+	box-shadow: 0px 2px 2px silver;
+}
+/* panel heading */
+.panel h2, .panelcollapsed h2 {
+	font-size: 16px;
+	font-weight: normal;
+	color: #333;
+	margin: 0px;
+	padding: 4px 5px 4px 10px;
+	background: #EEE url('arrow-up.gif') center right no-repeat;
+	border-bottom: 1px solid #DBDEE1;
+}
+/* panel heading on rollover */
+.panel h2:hover, .panelcollapsed h2:hover { background-color: #D8D8D8; }
+/* heading of a collapsed panel */
+.panelcollapsed h2 {
+	background: #EEE url('arrow-dn.gif') center right no-repeat;
+	border-color: #DBDEE1;
+}
+/* panel content - do not set borders or paddings */
+.panelcontent { 
+	background: #FBFBFB; 
+	padding: 8px;
+	overflow: hidden;
+}
+/* collapsed panel content */
+.panelcollapsed .panelcontent { display: none; }

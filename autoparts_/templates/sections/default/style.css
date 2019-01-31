@@ -1,0 +1,77 @@
+.autopic {
+  width: 90px!important;
+  height: 90px!important;
+  right: 20px;
+  position: absolute;
+  background-position: center center!important;
+  background-repeat: no-repeat!important;
+}
+.secnode {
+  float: left;
+  width: 199px!important;
+  height: 162px!important;
+  margin: 10px 18px 10px 0 !important;
+  background-color: #ffffff;
+  background-position: center 20px;
+  background-repeat: no-repeat;
+  border: 0px solid #e5e5e5;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;  
+}
+.secnode.last {
+	margin-right: 0 !important;
+}
+
+.secnode a {
+  display: block;
+  font-family: Arial;
+  font-size: 12px;
+  height: 162px !important;
+  padding: 0 !important;
+  text-align: center;
+  width: 220px !important;
+}
+.secnode a b {
+  display: block;
+  padding-top: 129px;
+  font-weight: 400;
+  font-size: 15px;
+  color: #303030;
+}
+.secnode:hover {
+	 border: 1px solid #ccc;
+}
+.secnode a:hover b {
+  color: #666!important; 
+}
+.tbcars {
+  padding: 10px 20px 10px 20px!important;
+}
+.tbtracks {
+  padding: 10px 20px 10px 20px!important;
+}
+.tbcars:focus {
+  border: 0px!important;
+  box-shadow: none!important;
+  outline: #ffffff solid 0px!important;
+}
+.tbtracks:focus {
+  border: 0px!important;
+  box-shadow: none!important;
+  outline: #ffffff solid 0px!important;
+}
+#tabs {
+  background: none!important;
+  border: 0px!important;
+  padding: 0px!important;
+}
+#tabs ul {
+  background: none!important;
+  border-left: 0px!important;
+  border-top: 0px!important;
+  border-right: 0px!important;
+}
+#tree {
+  margin-left: 20px;
+}

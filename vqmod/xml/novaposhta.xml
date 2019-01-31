@@ -1,0 +1,73 @@
+<modification>
+	<id><![CDATA[Новая Почта c калькулятором + отделения SQL ]]></id>
+	<version><![CDATA[1.0]]></version>
+	<vqmver><![CDATA[]]></vqmver>
+	<author><![CDATA[m.s.tkalenko]]></author>
+	
+	<file name="catalog/language/russian/checkout/checkout.php,catalog/language/russian/affiliate/register.php,catalog/language/russian/affiliate/edit.php,catalog/language/russian/account/register.php,catalog/language/russian/account/address.php,admin/language/russian/sale/affiliate.php,admin/language/russian/sale/customer.php,admin/language/russian/sale/order.php">
+		<operation error="skip">
+			<search position="replace"><![CDATA['Город:']]></search>
+			<add><![CDATA['Отделение Новой почты:']]></add>
+		</operation>
+	</file>
+	<file name="admin/language/russian/sale/order.php">	
+		<operation error="skip">
+			<search position="replace"><![CDATA['Область:']]></search>
+			<add><![CDATA['Город:']]></add>
+		</operation>
+	</file>
+	<file name="catalog/language/russian/checkout/checkout.php,catalog/language/russian/checkout/cart.php,catalog/language/russian/affiliate/register.php,catalog/language/russian/affiliate/edit.php,catalog/language/russian/account/register.php,catalog/language/russian/account/address.php,admin/language/russian/localisation/geo_zone.php,admin/language/russian/localisation/zone.php,admin/language/russian/sale/customer.php,admin/language/russian/sale/order.php,admin/language/russian/setting/setting.php,admin/language/russian/setting/store.php">	
+		<operation error="skip">
+			<search position="replace"><![CDATA['Страна:']]></search>
+			<add><![CDATA['Регион:']]></add>
+		</operation>
+	</file>
+	<file name="admin/language/russian/setting/setting.php">	
+		<operation error="skip">
+			<search position="replace"><![CDATA['Регион / Область:']]></search>
+			<add><![CDATA['Город:']]></add>
+		</operation>
+	</file>
+	<file name="admin/language/russian/localisation/zone.php,admin/language/russian/module/simple.php">	
+		<operation error="skip">
+			<search position="replace"><![CDATA['Страна']]></search>
+			<add><![CDATA['Регион']]></add>
+		</operation>
+	</file>
+	<file name="admin/language/russian/common/header.php,admin/language/russian/localisation/zone.php">	
+		<operation error="skip">
+			<search position="replace"><![CDATA['Регионы']]></search>
+			<add><![CDATA['Города']]></add>
+		</operation>
+	</file>
+	<file name="admin/language/russian/common/header.php,admin/language/russian/localisation/country.php">	
+		<operation error="skip">
+			<search position="replace"><![CDATA['Страны']]></search>
+			<add><![CDATA['Регионы']]></add>
+		</operation>
+	</file>
+	<file name="admin/language/russian/localisation/country.php">	
+		<operation error="skip">
+			<search position="replace"><![CDATA['Название страны:']]></search>
+			<add><![CDATA['Название региона:']]></add>
+		</operation>
+		<operation error="skip">
+			<search position="replace"><![CDATA['Название страны']]></search>
+			<add><![CDATA['Название региона']]></add>
+		</operation>
+	</file>
+	<file name="admin/language/russian/localisation/zone.php">	
+		<operation error="skip">
+			<search position="replace"><![CDATA['Код региона:']]></search>
+			<add><![CDATA['Код города:']]></add>
+		</operation>
+		<operation error="skip">
+			<search position="replace"><![CDATA['Название региона:']]></search>
+			<add><![CDATA['Название города:']]></add>
+		</operation>
+		<operation error="skip">
+			<search position="replace"><![CDATA['Название региона']]></search>
+			<add><![CDATA['Название города']]></add>
+		</operation>
+	</file>
+</modification>

@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+	<id>Mega Filter PRO</id>
+	<version>1.5.x</version>
+	<vqmver required="true">2.4.0</vqmver>
+	<author>marsilea15@gmail.com</author>
+	
+	<!-- Column Left, Column Right, Content Top, Content Bottom -->
+	<file path="catalog/controller/common/" name="column_left.php,column_right.php,content_top.php">
+		<operation>
+			<search position="before"><![CDATA[foreach ($modules as $module) {]]></search>
+			<add><![CDATA[
+				$idx = 0;
+				$idxs = array();
+				
+				foreach( $modules as $k => $v ) {
+					$idxs[] = $k;
+				}
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[foreach ($modules as $module) {]]></search>
+			<add><![CDATA[
+				if( ! isset( $module['layout_id'] ) )
+					$module['layout_id'] = 0;
+					
+				if( ! isset( $module['position'] ) )
+					$module['position'] = '';
+								
+				if( ! isset( $module['status'] ) )
+					$module['status'] = '0';
+								
+				if( ! isset( $module['sort_order'] ) )
+					$module['sort_order'] = 0;
+			
+				if( ! is_array( $module['layout_id'] ) )
+					$module['layout_id'] = array( $module['layout_id'] );
+					
+				$module['_idx'] = $idxs[$idx++];
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<search position="replace"><![CDATA[$module['layout_id'] == $layout_id]]></search>
+			<add><![CDATA[( in_array( $layout_id, $module['layout_id'] ) || in_array( '-1', $module['layout_id'] ) )]]></add>
+		</operation>
+		<operation error="skip">
+			<search position="replace"><![CDATA[$layout['layout_id'] == $module['layout_id']]]></search>
+			<add><![CDATA[( in_array( $layout['layout_id'], $module['layout_id'] ) || in_array( '-1', $module['layout_id'] ) )]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[$module_data[] = array(]]></search>
+			<add><![CDATA[
+				if( $extension['code'] != 'mega_filter' ) {
+					unset( $module['_idx'] );
+					$module['layout_id'] = current( $module['layout_id'] );
+				}
+			]]></add>
+		</operation>
+	</file>
+	
+	<file path="system/engine/" name="controller.php">
+		<operation>
+			<search position="after"><![CDATA[$this->registry = $registry;]]></search>
+			<add><![CDATA[				
+				if( ! empty( $this->request->get['mfp'] ) ) {
+					preg_match( '/path\[([^]]*)\]/', $this->request->get['mfp'], $mf_matches );
+
+					if( ! empty( $mf_matches[1] ) ) {
+						$this->request->get['path'] = $mf_matches[1];
+
+						if( isset( $this->request->get['category_id'] ) || ( isset( $this->request->get['route'] ) && in_array( $this->request->get['route'], array( 'product/search', 'product/special', 'product/manufacturer/info' ) ) ) ) {
+							$mf_matches = explode( '_', $mf_matches[1] );
+							$this->request->get['category_id'] = end( $mf_matches );
+						}
+					}
+				
+					unset( $mf_matches );
+				}
+			]]></add>
+		</operation>
+		<operation>
+			<search position="replace"><![CDATA[$this->data[basename($child)] = $this->getChild($child);]]></search>
+			<add><![CDATA[
+				if( ! isset( $this->data['mfp_'.basename($child)] ) ) {
+					$this->data[basename($child)] = $this->getChild($child);
+				}
+			]]></add>
+		</operation>
+	</file>
+	
+	<file path="catalog/controller/common/" name="header.php">
+		<operation error="skip">
+			<search position="replace"><![CDATA[$product_total = $this->model_catalog_product->getTotalProducts($data);]]></search>
+			<add><![CDATA[
+				$mfp = NULL;
+				
+				if( isset( $this->request->get['mfp'] ) ) {
+					$mfp = $this->request->get['mfp'];
+					unset( $this->request->get['mfp'] );
+				}
+				
+				$product_total = $this->model_catalog_product->getTotalProducts($data);
+				
+				if( $mfp !== NULL ) {
+					$this->request->get['mfp'] = $mfp;
+				}
+			]]></add>
+		</operation>
+	</file>
+	
+	<file path="catalog/controller/product/" name="special.php">
+		<operation>
+			<search position="before"><![CDATA[$product_total = $this->model_catalog_product->getTotalProductSpecials($data);]]></search>
+			<add><![CDATA[
+				if( isset( $this->request->get['category_id'] ) ) {
+					$data['filter_category_id'] = (int) $this->request->get['category_id'];
+				}
+			]]></add>
+		</operation>
+	</file>
+	
+	<file path="catalog/controller/common/" name="seo_url.php">
+		<operation>
+			<search position="replace"><![CDATA[$this->request->get['route'] = 'product/category';]]></search>
+			<add><![CDATA[
+				if( isset( $this->request->get['_route_'] ) ) {
+					if( strpos( $this->request->get['_route_'], 'module/mega_filter' ) === false ) {
+						$this->request->get['route'] = 'product/category';
+					} else {
+						$this->request->get['route'] = $this->request->get['_route_'];
+					}
+				} else if( isset( $this->request->get['route'] ) ) {
+					if( strpos( $this->request->get['route'], 'module/mega_filter' ) === false ) {
+						$this->request->get['route'] = 'product/category';
+					}
+				} else {
+					$this->request->get['route'] = 'product/category';
+				}
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<search position="before"><![CDATA[$query .= '&' . $key . '=' . $value;]]></search>
+			<add><![CDATA[if( is_array( $value ) ) continue;]]></add>
+		</operation>
+	</file>
+	
+	<file path="catalog/controller/common/" name="seo_pro.php" error="skip">
+		<operation>
+			<search position="replace"><![CDATA[if (rawurldecode($url) != rawurldecode($seo)) {]]></search>
+			<add><![CDATA[if (rawurldecode($url) != rawurldecode($seo) && strpos($url,'mfp=')===false) {]]></add>
+		</operation>
+		<operation>
+			<search position="replace"><![CDATA[$this->request->get['route'] = 'product/category';]]></search>
+			<add><![CDATA[
+				if( empty( $this->request->get['route'] ) || strpos( $this->request->get['route'], 'module/mega_filter' ) === false ) {
+					if( isset( $queries[$parts[0]] ) && strpos( $queries[$parts[0]], '/' ) !== false ) {
+						$this->request->get['route'] = $queries[$parts[0]];
+					} else {
+						if( ! empty( $this->request->get['mfp'] ) ) {
+							preg_match( '/path\[([^]]*)\]/', $this->request->get['mfp'], $mf_matches );
+
+							if( ! empty( $mf_matches[1] ) ) {
+								if( isset($this->request->get['manufacturer_id']) ) {
+									$this->request->get['route'] = 'product/manufacturer/info';
+								} else {
+									$this->request->get['route'] = 'product/category';
+								}
+							} else {
+								$this->request->get['route'] = 'product/category';
+							}
+
+							unset( $mf_matches );
+						} else {
+							$this->request->get['route'] = 'product/category';
+						}
+					}
+				}
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[private function validate() {]]></search>
+			<add><![CDATA[
+				if( isset( $this->request->get['route'] ) && strpos( $this->request->get['route'], 'module/mega_filter' ) !== false ) {
+					return;
+				}
+			]]></add>
+		</operation>
+	</file>
+	
+	<file path="catalog/model/catalog/" name="product.php">
+		<operation>
+			<search position="before"><![CDATA[$query = $this->db->query($sql);]]></search>
+			<add><![CDATA[
+				if( in_array( __FUNCTION__, array( 'getProducts', 'getTotalProducts', 'getProductSpecials', 'getTotalProductSpecials' ) ) ) {					
+					if( ! empty( $this->request->get['mfp'] ) || ( NULL != ( $mfSettings = $this->config->get('mega_filter_settings') ) && ! empty( $mfSettings['in_stock_default_selected'] ) ) ) {
+						if( ! empty( $this->request->get['mfp'] ) || $this->config->get('mfp_is_activated') ) {
+							$this->load->model( 'module/mega_filter' );
+							
+							$sql = MegaFilterCore::newInstance( $this, $sql )->getSQL( __FUNCTION__ );
+						}
+					}
+				}
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<search position="replace"><![CDATA[$this->db->query("SELECT COUNT(DISTINCT ps.product_id) AS total FROM " . DB_PREFIX . "product_special ps LEFT JOIN " . DB_PREFIX . "product p ON (ps.product_id = p.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) WHERE p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "' AND ps.customer_group_id = '" . (int)$customer_group_id . "' AND ((ps.date_start = '0000-00-00' OR ps.date_start < NOW()) AND (ps.date_end = '0000-00-00' OR ps.date_end > NOW()))");]]></search>
+			<add><![CDATA[
+				$sql = "SELECT COUNT(DISTINCT ps.product_id) AS total FROM " . DB_PREFIX . "product_special ps LEFT JOIN " . DB_PREFIX . "product p ON (ps.product_id = p.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) WHERE p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "' AND ps.customer_group_id = '" . (int)$customer_group_id . "' AND ((ps.date_start = '0000-00-00' OR ps.date_start < NOW()) AND (ps.date_end = '0000-00-00' OR ps.date_end > NOW()))";
+			
+				if( ! empty( $this->request->get['mfp'] ) || ( NULL != ( $mfSettings = $this->config->get('mega_filter_settings') ) && ! empty( $mfSettings['in_stock_default_selected'] ) ) ) {
+					$this->load->model( 'module/mega_filter' );
+					
+					$sql = MegaFilterCore::newInstance( $this, $sql )->getSQL( __FUNCTION__ );
+				}
+				
+				$query = $this->db->query( $sql );
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<search position="replace"><![CDATA[$query = $this->db->query("SELECT COUNT(DISTINCT ps.product_id) AS total FROM " . DB_PREFIX . "product_special ps LEFT JOIN " . DB_PREFIX . "product p ON (ps.product_id = p.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) WHERE p.status = '1' AND ( p.mod_customer_group_restrict IS NULL OR " . ( NULL != ( $cgrS = $this->config->get( 'customer_group_restrict' ) ) && $cgrS['mode_product'] == 'unavailable' ? 'NOT' : '' ) . " FIND_IN_SET( " . ( $this->customer->isLogged() ? (int) $this->customer->getCustomerGroupId() : $this->config->get('config_customer_group_id') ) . ", p.mod_customer_group_restrict )) AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "' AND ps.customer_group_id = '" . (int)$customer_group_id . "' AND ((ps.date_start = '0000-00-00' OR ps.date_start < NOW()) AND (ps.date_end = '0000-00-00' OR ps.date_end > NOW()))");]]></search>
+			<add><![CDATA[
+				$sql = "SELECT COUNT(DISTINCT ps.product_id) AS total FROM " . DB_PREFIX . "product_special ps LEFT JOIN " . DB_PREFIX . "product p ON (ps.product_id = p.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) WHERE p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "' AND ps.customer_group_id = '" . (int)$customer_group_id . "' AND ((ps.date_start = '0000-00-00' OR ps.date_start < NOW()) AND (ps.date_end = '0000-00-00' OR ps.date_end > NOW()))";
+			
+				if( ! empty( $this->request->get['mfp'] ) || ( NULL != ( $mfSettings = $this->config->get('mega_filter_settings') ) && ! empty( $mfSettings['in_stock_default_selected'] ) ) ) {
+					$this->load->model( 'module/mega_filter' );
+					
+					$sql = MegaFilterCore::newInstance( $this, $sql )->getSQL( __FUNCTION__ );
+				}
+				
+				$query = $this->db->query( $sql );
+			]]></add>
+		</operation>
+		<!-- v1.5.4 -->
+		<operation error="skip">
+			<search position="before"><![CDATA[$cache = md5(http_build_query($data));]]></search>
+			<add><![CDATA[
+				if( ! empty( $this->request->get['mfp'] ) ) {
+					$data['mfp'] = $this->request->get['mfp'];
+				}
+			]]></add>
+		</operation>
+	</file>
+	
+	<file path="catalog/controller/product/" name="category.php">
+		<operation>
+			<search position="before"><![CDATA[$product_total = $this->model_catalog_product->getTotalProducts($data);]]></search>
+			<add><![CDATA[
+				$fmSettings = $this->config->get('mega_filter_settings');
+		
+				if( ! empty( $fmSettings['show_products_from_subcategories'] ) ) {
+					if( ! empty( $fmSettings['level_products_from_subcategories'] ) ) {
+						$fmLevel = (int) $fmSettings['level_products_from_subcategories'];
+						$fmPath = explode( '_', empty( $this->request->get['path'] ) ? '' : $this->request->get['path'] );
+
+						if( $fmPath && count( $fmPath ) >= $fmLevel ) {
+							$data['filter_sub_category'] = '1';
+						}
+					} else {
+						$data['filter_sub_category'] = '1';
+					}
+				}
+				
+				if( ! empty( $this->request->get['manufacturer_id'] ) ) {
+					$data['filter_manufacturer_id'] = (int) $this->request->get['manufacturer_id'];
+				}
+				
+				if( ! empty( $fmSettings['in_stock_default_selected'] ) ) {
+					$this->data['column_left'] = $this->getChild('common/column_left');
+					$this->data['column_right'] = $this->getChild('common/column_right');
+					$this->data['content_top'] = $this->getChild('common/content_top');
+					$this->data['mfp_column_left'] = true;
+					$this->data['mfp_column_right'] = true;
+					$this->data['mfp_content_top'] = true;
+				}
+			]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[$this->data['categories'] = array();]]></search>
+			<add><![CDATA[
+				$fmSettings = $this->config->get('mega_filter_settings');
+				
+				if( ! empty( $fmSettings['not_remember_filter_for_subcategories'] ) && false !== ( $mfpPos = strpos( $url, '&mfp=' ) ) ) {
+					$mfUrlBeforeChange = $url;
+					$mfSt = mb_strpos( $url, '&', $mfpPos+1, 'utf-8');
+					$url = $mfSt === false ? '' : mb_substr($url, $mfSt, mb_strlen( $url, 'utf-8' ), 'utf-8');
+				}
+			]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[$this->data['products'] = array();]]></search>
+			<add><![CDATA[
+				if( isset( $mfUrlBeforeChange ) ) {
+					$url = $mfUrlBeforeChange;
+					unset( $mfUrlBeforeChange );
+				}
+			]]></add>
+		</operation>
+	</file>
+	
+	<file path="catalog/controller/" name="product/category.php,product/manufacturer.php,product/search.php,product/special.php,module/mega_filter.php">
+		<operation error="skip">
+			<search position="after"><![CDATA[$url = '';]]></search>
+			<add><![CDATA[
+				if( ! empty( $this->request->get['mfp'] ) ) {
+					$url .= '&mfp=' . $this->request->get['mfp'];
+				}
+			]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[$this->response->setOutput(]]></search>
+			<add><![CDATA[
+				if( isset( $this->request->get['mfilterAjax'] ) ) {
+					$settings	= $this->config->get('mega_filter_settings');
+					$baseTypes	= array( 'stock_status', 'manufacturers', 'rating', 'attributes', 'price', 'options', 'filters' );
+		
+					if( isset( $this->request->get['mfilterBTypes'] ) ) {
+						$baseTypes = explode( ',', $this->request->get['mfilterBTypes'] );
+					}
+					
+					if( ! empty( $settings['calculate_number_of_products'] ) || in_array( 'categories:tree', $baseTypes ) ) {
+						if( empty( $settings['calculate_number_of_products'] ) ) {
+							$baseTypes = array( 'categories:tree' );
+						}
+				
+						$this->load->model( 'module/mega_filter' );
+
+						$idx = 0;
+		
+						if( isset( $this->request->get['mfilterIdx'] ) )
+							$idx = (int) $this->request->get['mfilterIdx'];
+						
+						$this->data['mfilter_json'] = json_encode( MegaFilterCore::newInstance( $this, NULL )->getJsonData($baseTypes, $idx) );
+					}
+				
+					foreach( $this->children as $mf_child ) {
+						$mf_child = explode( '/', $mf_child );
+						$mf_child = array_pop( $mf_child );
+						$this->data[$mf_child] = '';
+					}
+						
+					$this->children=array();
+					$this->data['header'] = $this->data['column_left'] = $this->data['column_right'] = $this->data['content_top'] = $this->data['content_bottom'] = $this->data['footer'] = '';
+				}
+				
+				if( ! empty( $this->data['breadcrumbs'] ) && ! empty( $this->request->get['mfp'] ) ) {
+					
+					foreach( $this->data['breadcrumbs'] as $mfK => $mfBreadcrumb ) {
+						$mfReplace = preg_replace( '/path\[[^\]]+\],?/', '', $this->request->get['mfp'] );
+						$mfFind = ( mb_strpos( $mfBreadcrumb['href'], '?mfp=', 0, 'utf-8' ) !== false ? '?mfp=' : '&mfp=' );
+						
+						$this->data['breadcrumbs'][$mfK]['href'] = str_replace(array(
+							$mfFind . $this->request->get['mfp'],
+							'&amp;mfp=' . $this->request->get['mfp'],
+							$mfFind . urlencode( $this->request->get['mfp'] ),
+							'&amp;mfp=' . urlencode( $this->request->get['mfp'] )
+						), $mfReplace ? $mfFind . $mfReplace : '', $mfBreadcrumb['href'] );
+					}
+				}
+			]]></add>
+		</operation>
+	</file>
+	
+	<file path="catalog/view/theme/*/template/product/" name="category.tpl,manufacturer_info.tpl,search.tpl,special.tpl">
+		<operation>
+			<search position="replace"><![CDATA[echo $header; ?>]]></search>
+			<add><![CDATA[echo $header; ?><?php if( ! empty( $mfilter_json ) ) { echo '<div id="mfilter-json" style="display:none">' . base64_encode( $mfilter_json ) . '</div>'; } ?>]]></add>
+		</operation>
+		<operation>
+			<search position="replace"><![CDATA[<?php echo $content_top; ?>]]></search>
+			<add><![CDATA[<?php echo $content_top; ?><div id="mfilter-content-container">]]></add>
+		</operation>
+		<operation>
+			<search position="replace"><![CDATA[<?php echo $content_bottom; ?>]]></search>
+			<add><![CDATA[</div><?php echo $content_bottom; ?>]]></add>
+		</operation>
+	</file>
+	
+	<file path="admin/model/catalog/category.php">
+		<operation>
+			<search position="after"><![CDATA[ModelCatalogCategory extends Model {]]></search>
+			<add><![CDATA[
+	
+			public function getCategories_MF($data) {
+				if( version_compare( VERSION, '1.5.5', '>=' ) ) {
+					$sql = "SELECT cp.category_id AS category_id, GROUP_CONCAT(cd1.name ORDER BY cp.level SEPARATOR ' &gt; ') AS name, c.parent_id, c.sort_order FROM " . DB_PREFIX . "category_path cp LEFT JOIN " . DB_PREFIX . "category c ON (cp.path_id = c.category_id) LEFT JOIN " . DB_PREFIX . "category_description cd1 ON (c.category_id = cd1.category_id) LEFT JOIN " . DB_PREFIX . "category_description cd2 ON (cp.category_id = cd2.category_id) WHERE cd1.language_id = '" . (int)$this->config->get('config_language_id') . "' AND cd2.language_id = '" . (int)$this->config->get('config_language_id') . "'";
+
+					if( ! empty( $data['filter_name'] ) ) {
+						$sql .= " AND cd2.name LIKE '" . $this->db->escape($data['filter_name']) . "%'";
+					} 
+				
+					$sql .= " GROUP BY cp.category_id ORDER BY name";
+				} else {
+					$sql = "SELECT * FROM " . DB_PREFIX . "category c LEFT JOIN " . DB_PREFIX . "category_description cd ON (c.category_id = cd.category_id) WHERE cd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
+				
+					if( ! empty( $data['filter_name'] ) ) {
+						$sql .= " AND LOWER(cd.name) LIKE '" . $this->db->escape( function_exists( 'mb_strtolower' ) ? mb_strtolower( $data['filter_name'], 'utf-8' ) : $data['filter_name'] ) . "%'";
+					}
+				
+					$sql .= " GROUP BY c.category_id ORDER BY name";
+				}
+
+				if (isset($data['start']) || isset($data['limit'])) {
+					if ($data['start'] < 0) {
+						$data['start'] = 0;
+					}				
+
+					if ($data['limit'] < 1) {
+						$data['limit'] = 20;
+					}	
+
+					$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+				}
+				
+				$query = $this->db->query($sql);
+
+				return $query->rows;
+			}
+				
+			]]></add>
+		</operation>
+	</file>
+
+</modification>

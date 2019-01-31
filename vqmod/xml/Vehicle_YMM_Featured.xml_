@@ -1,0 +1,42 @@
+<modification>
+	<id>Vehicle Year/Make/Model Filter</id>
+	<version>2.17.0</version>
+	<vqmver>2.3.0</vqmver>
+	<author>Spot On Solutions http://spotonsolutions.net</author>
+	<file name="catalog/controller/module/featured.php">
+		<operation>
+			<search position="after"><![CDATA[$products = explode(',', $this->config->get('featured_product'));]]></search>
+			<add><![CDATA[if(isset($this->session->data['ymm'])){
+			$filter_query_string = "SELECT p.product_id FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_to_ymm p2y ON p2y.product_id = p.product_id WHERE p.universal = '1' OR (p2y.make_id = '" . $this->session->data['ymm']['make'] . "'";
+			if(!empty($this->session->data['ymm']['model'])){
+				$filter_query_string .= " AND p2y.model_id = '" . $this->session->data['ymm']['model'] . "'";
+			}
+			if(!empty($this->session->data['ymm']['engine'])){
+				$filter_query_string .= " AND p2y.engine_id = '" . $this->session->data['ymm']['engine'] . "'";
+			}
+			if(!empty($this->session->data['ymm']['year'])){
+				$filter_query_string .= " AND p2y.begin_year <= '" . $this->session->data['ymm']['year'] . "' AND p2y.end_year >= '" . $this->session->data['ymm']['year'] . "'";
+			}
+			$filter_query_string .= ")";
+			$filter_query = $this->db->query($filter_query_string);
+			foreach($filter_query->rows as $row){
+				$product_list[] = $row['product_id'];
+			}
+		}]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[foreach ($products as $product_id) {]]></search>
+			<add><![CDATA[if(isset($this->session->data['ymm'])){
+				if(in_array($product_id, $product_list)){]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[if ($product_info) {]]></search>
+			<add><![CDATA[	} else {
+					$product_info = false;
+				}
+			} else {
+				$product_info = $this->model_catalog_product->getProduct($product_id);
+			}]]></add>
+		</operation>
+	</file>
+</modification>

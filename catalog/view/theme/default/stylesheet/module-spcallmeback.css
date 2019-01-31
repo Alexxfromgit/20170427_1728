@@ -1,0 +1,301 @@
+.stop-scrolling {
+  height: 100%;
+  overflow-y: hidden;
+  /*position:fixed;*/
+}
+
+.stop-scrolling2 {
+  overflow: hidden;
+  overflow-x: auto;
+  /*height: 100%;*/
+}
+
+.spcallmeback_wrap {
+    padding: 5px 12px;
+    /*padding-bottom: 5px;*/
+    width:350px;
+}
+
+.spcallmeback_wrap h4 {
+    font-size:20px;
+    color: #009FFF;
+    padding: 0;
+    margin: 0;
+    text-align:left;
+}
+
+
+
+.spcallmeback_button
+{
+    /*background-color: #FBFBFB;*/
+/*    background-color: green;
+    color: white;*/
+    font-size:14px;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.spcallmeback_button span, .spcallmeback_button a
+{
+    /*background-color: #FBFBFB;*/
+    background-color: green;
+    color: white;
+    white-space: nowrap;
+    padding: 6px 24px 6px 25px;
+    /*margin-top: -125px;*/
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    border-radius: 5px;
+    text-decoration:none;
+}
+
+
+.spcallmeback_sidebutton_inside
+{
+  display: table;
+}
+
+.spcallmeback_sidebutton_inside a
+{
+  display: table-cell;
+}
+
+/* side button */
+
+
+.spcallmeback_sidebutton {
+    cursor: pointer;
+    display:block;
+    position: fixed;
+    top: 55%;
+    /*height: 250px;*/
+    width:20px;
+    text-align: right;
+    opacity: 0.7;
+    z-index:110;
+    line-height: 14px;
+}
+
+.spcallmeback_sidebutton_left {
+    left: -2px;
+    -webkit-transform: rotate(270deg);   
+    -moz-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    transform: rotate(270deg);    
+    writing-mode: tb-rl ; /* IE 7 */
+    -ms-writing-mode:tb;  /*tb in IE9 */
+}
+
+.spcallmeback_sidebutton_right {
+    right: -2px;
+    -webkit-transform: rotate(270deg);   
+    -moz-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    transform: rotate(270deg);    
+    writing-mode: bt-rl; /* tb-rl, bt-rl, tb-lr*/ 
+    -ms-writing-mode:tb;  /*tb in IE9 */
+}
+
+.spcallmeback_sidebutton:hover {
+opacity: 0.9;
+}
+
+
+
+
+/* forms */
+
+.spcallmeback_form table td:first-child {
+    /*min-width:100px;*/
+}
+
+.spcallmeback_form table, .spcallmeback_form tr
+{
+    width:100%;
+}
+
+.spcallmeback_form table, .spcallmeback_form table tr, /*.spcallmeback_form table td:first-child*/ {
+    text-align: right;
+}
+
+.spcallmeback_table td:nth-child(1) {
+    text-align: left;
+}
+
+.spcallmeback_form input[type="text"] {
+    border: 1px solid #aaa;
+     -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -khtml-border-radius: 3px;
+    border-radius: 3px;
+    box-shadow: 0 1px 0 #fff;
+    color: #666;
+    padding: 4px 5px !important;
+}
+
+.spform_textarea
+{
+    width:300px !important;
+    border: 1px solid #aaa;
+    box-shadow: 0 1px 0 #fff;
+     -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -khtml-border-radius: 3px;
+    border-radius: 3px;
+    padding: 3px;
+}
+
+.spcallmeback_form input[type="submit"].spcallmeback_submit {
+    height: 1.4em;
+    border: none !important;
+}
+
+
+
+.spcallmeback_form input[type="submit"].spcallmeback_submit, .spcallmeback_form span.spcallmeback_close_btn {
+    padding: 0;
+    margin: 0;
+    outline-width: 0px;
+    color: #6CCF62;
+    font-weight: bold;
+    cursor:pointer;
+    /*background-color: transparent;*/
+         background: none;
+    box-shadow: 0 0px 0 #fff;
+    border-collapse: collapse  !important;
+	text-shadow: 0 0;
+}
+
+.spcallmeback_submit {
+    float:left;
+}
+
+.spcallmeback_form span.spcallmeback_close_btn {
+    float: right;
+    /*height: 1.3em;*/
+    display:block;
+    margin:0;
+    border-bottom: 1px dashed black;
+}
+
+
+/* colors */
+div#fancybox-outer {
+    background-color: white;
+}
+
+div#fancybox-content {
+    border-color: white;
+}
+
+div.spcallmeback_wrap table, div.spcallmeback_wrap td {
+    color: black;
+    background-color: white;
+}
+
+.spcallmeback_form .spform_textarea, .spcallmeback_form input[type="text"] {
+    color: #666;
+}
+
+.spcallmeback_form tr.highlight td {
+    background: #DFEFFF;
+}
+
+
+/* zebra */
+
+.Zebra_Form table tr:nth-child(1) td {
+    /*padding: 0;*/
+}
+
+.Zebra_Form .row td
+{
+    border: 1px solid transparent;
+}
+
+.Zebra_Form .row td:nth-child(1) { border-right-width:0px}
+.Zebra_Form .row td:nth-child(2) { border-left-width:0px}
+.Zebra_Form .row td:last-child { border-left-width:0px}
+.Zebra_Form .row td[colspan="2"] { border-left-width:1px}
+
+
+.Zebra_Form table {
+    border-collapse: separate;
+    border-spacing: 0px;
+}
+
+.Zebra_Form .row 
+{
+}
+
+.Zebra_Form .highlight td:nth-child(1) { border-top-left-radius: 5px;  border-bottom-left-radius: 5px; border: 1px solid #C2D7EF; border-right:0px}
+.Zebra_Form .highlight td:nth-child(2) { border-top-right-radius: 5px; border-bottom-right-radius: 5px; border: 1px solid #C2D7EF; border-left-width:0px}
+.Zebra_Form .highlight td:last-child { border-top-right-radius: 5px; border-bottom-right-radius: 5px; border: 1px solid #C2D7EF; border-left-width:0px}
+.Zebra_Form .highlight td[colspan="2"] { border-left-width:1px}
+
+.Zebra_Form .row label {
+    margin-top: 5px;
+}
+
+.Zebra_Form_error_message {
+    position: fixed;
+}
+
+.Zebra_Form .highlight {
+    /*float:left;*/
+    clear:both;
+}
+
+
+/* fancy */
+
+div#fancybox-wrap {
+  position: fixed !important;;
+  min-width: 300px !important;
+  left: 30px;
+  /*top: 30% !important;*/
+  /*left: 100px !important;*/
+}
+
+#fancybox-content {
+  min-width: 250px !important;
+}
+
+div #fancybox-close {
+    top: 15px;
+    right: 15px;
+}
+
+#fancybox-outer
+{
+    border: 2px solid #eee;
+}
+
+
+.nofocus {
+    /*width:80px;
+    height:20px;*/
+    border: 0px;
+    border-bottom: 1px dashed black;
+    overflow:hidden;
+    position:relative;
+    display:inline-table;
+    margin:0px 0;
+    float: left;
+}
+
+div#fancybox-wrap, div#fancybox-content, div.spcallmeback_wrap {
+  box-sizing: content-box;
+  -moz-box-sizing: content-box;
+}
+
+#container {
+  z-index: 0 !important;
+}
+
+#spcallmeback_btn_wrap_1 {
+  z-index: 999999;
+}

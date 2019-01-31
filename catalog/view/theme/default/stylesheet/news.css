@@ -1,0 +1,20 @@
+/*
+// News Module for Opencart v1.5.5, modified by villagedefrance (contact@villagedefrance.net)
+*/
+
+.box-news {display: inline-block;vertical-align: top; margin: 5px 28px 30px 0px;overflow: auto;width: 158px; }
+.content-news { background:#FBFBFB;margin-bottom:10px;overflow:auto;border:1px solid #DBDEE1;-webkit-border-radius:5px;-moz-border-radius:5px;-khtml-border-radius:5px;border-radius:5px;-webkit-box-shadow:0 2px 2px silver;-moz-box-shadow:0 2px 2px silver;box-shadow:0 2px 2px silver;padding:10px }
+.content-news .news { width:100% }
+.content-news .news a { text-decoration:none }
+.content-news .news h3 { font-size:14px;font-weight:700;color:#444;text-shadow:0 1px 1px silver;margin-top:0;margin-bottom:5px }
+.content-news .news p { margin:5px 0 }
+.content-news .news .image {width:auto;float:right;margin:5px }
+.box-news h4 { margin-top:0;margin-bottom:5px;padding-bottom: 5px;border-bottom:1px solid #eee;font-size: 13px; }
+.box-news p { margin-top:0;margin-bottom:5px }
+.box-news .newsa{color: #fff; }
+.addthis { padding: 10px 0px; }
+.newsimage img { float: left; margin: 0px 5px 10px 0px; padding: 2px 2px 0px 2px; border: 2px solid #eee; }
+#column-right .newsimage img { margin: 0px 5px 0px 0px; }
+#column-left .newsimage img { margin: 0px 5px 0px 0px; }
+#column-right .newsimage img { width: 64px; }
+#column-left .newsimage img { width: 64px; }

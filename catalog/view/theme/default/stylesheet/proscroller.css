@@ -1,0 +1,75 @@
+.scroller .name a { 
+color: #38B0E3;
+display: block;
+font-weight: 700;
+margin-bottom: 4px;
+text-decoration: none;
+font-size:14px;
+}
+
+.scroller .jcarousel-skin-opencart .jcarousel-next-horizontal,.scroller .jcarousel-skin-opencart .jcarousel-prev-horizontal  {
+top: 40%;
+}
+.scroller .jcarousel-skin-opencart .jcarousel-container {
+margin-bottom:0px;
+}
+
+.scroller .jcarousel-skin-opencart .jcarousel-container-horizontal{
+padding: 0px;
+}
+
+.scroller  .jcarousel-skin-opencart .jcarousel-next-horizontal {
+
+right:0px}
+
+.scroller .price { 
+color: #333333;
+display: block;
+font-weight: 700;
+margin-bottom: 4px;
+}
+
+.scroller .price-old { 
+color: #FF0000;
+text-decoration: line-through;
+}
+
+.scroller .price-new { 
+font-weight: 700;
+}
+
+.scroller .jcarousel-skin-opencart .jcarousel-container{
+background:none;
+}
+
+.scroller .jcarousel-skin-opencart .jcarousel-item { 
+opacity: 1;
+text-align: center;
+}
+
+.scroller .jcarousel-skin-opencart .jcarousel-next-horizontal,.scroller .jcarousel-skin-opencart .jcarousel-prev-horizontal { 
+background: url("../image/button-spray.png") no-repeat transparent;
+width:13px;
+height:23px;
+}
+.scroller .jcarousel-skin-opencart .jcarousel-prev-horizontal{ 
+background-position:-11px 0px;
+}
+.scroller .jcarousel-skin-opencart .jcarousel-prev-horizontal:hover{ 
+background-position: -23px 0px;
+}
+
+.scroller .jcarousel-skin-opencart .jcarousel-next-horizontal{ 
+background-position:-48px 0px;
+}
+.scroller .jcarousel-skin-opencart .jcarousel-next-horizontal:hover{ 
+background-position: -36px 0px;
+}
+
+.scroller .jcarousel-skin-opencart .jcarousel-prev-disabled-horizontal{ 
+background:none;
+}
+
+.scroller .jcarousel-skin-opencart .jcarousel-next-disabled-horizontal{ 
+background:none;
+}

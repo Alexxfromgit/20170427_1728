@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+	<id>Clear Cache</id>
+	<version>1.3.0</version>
+	<vqmver>1.0.0</vqmver>
+	<author>ferywell</author>
+	<file name="admin/controller/tool/error_log.php">
+		<operation>
+			<search position="before"><![CDATA[$this->data['button_clear']]]></search>
+			<add><![CDATA[$this->data['button_clearcache'] = $this->language->get('button_clearcache');
+			$this->data['clearcache'] = $this->url->link('tool/error_log/clearcache', 'token=' . $this->session->data['token'], 'SSL');]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[public function clear()]]></search>
+			<add><![CDATA[	public function clearcache() {
+		$this->load->language('tool/error_log');
+		$files = glob(DIR_CACHE . 'cache.*');
+		foreach($files as $file){
+			$this->deldir($file);
+		}
+                $imgfiles = glob(DIR_IMAGE . 'cache/*');
+              foreach($imgfiles as $imgfile){
+                     $this->deldir($imgfile);
+		}
+		$this->session->data['success'] = $this->language->get('text_successch');
+		
+		$this->redirect($this->url->link('tool/error_log', 'token=' . $this->session->data['token'], 'SSL'));		
+		}
+        public function deldir($dirname){         
+		if(file_exists($dirname)) {
+			if(is_dir($dirname)){
+                            $dir=opendir($dirname);
+                            while($filename=readdir($dir)){
+                                    if($filename!="." && $filename!=".."){
+                                        $file=$dirname."/".$filename;
+					$this->deldir($file); 
+                                    }
+                                }
+                            closedir($dir);  
+                            rmdir($dirname);
+                        }
+			else {@unlink($dirname);}			
+		}
+	}]]></add>
+		</operation>
+	</file>
+	<file name="admin/view/template/tool/error_log.tpl">
+		<operation>
+			<search position="after"><![CDATA[<?php echo $button_clear; ?></a></div>]]></search>
+			<add><![CDATA[<div class="buttons"><a href="<?php echo $clearcache; ?>" class="button"><?php echo $button_clearcache; ?></a></div>]]></add>
+		</operation>
+	</file>
+	<file name="admin/language/*/tool/error_log.php">
+		<operation>
+			<search position="before"><![CDATA[?>]]></search>
+			<add><![CDATA[$_['button_clearcache']  = 'Clear Cache';$_['text_successch']  = 'Success: You have successfully cleared your cache!';]]></add>
+		</operation>
+	</file>
+</modification>

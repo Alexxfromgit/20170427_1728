@@ -1,0 +1,33 @@
+<modification>
+  <id>Add Support for News Plus in SEO Pro</id>
+  <version>1.0</version>
+  <vqmver>2.0</vqmver>
+  <author>CODEONETEAM</author>
+  <file name="catalog/controller/common/seo_pro.php">
+    <operation error="skip">
+      <search position="after">
+        <![CDATA[
+				$this->request->get['route'] = 'information/information';
+        ]]>
+      </search>
+      <add>
+        <![CDATA[
+			} elseif (isset($this->request->get['news_id'])) {
+				$this->request->get['route'] = 'information/news';
+        ]]>
+      </add>
+    </operation>
+	<operation error="skip">
+      <search position="after">
+        <![CDATA[
+				case 'information_id':
+        ]]>
+      </search>
+      <add>
+        <![CDATA[
+				case 'news_id':
+        ]]>
+      </add>
+    </operation>
+  </file>
+</modification>

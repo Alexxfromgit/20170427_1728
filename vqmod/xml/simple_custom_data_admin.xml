@@ -1,0 +1,177 @@
+<modification>
+    <id>Simple Custom Data</id>
+    <version>1.0.0</version>
+    <vqmver>2.1</vqmver>
+    <author>deeman</author>
+
+    <file name="admin/controller/sale/order.php">
+        <operation>
+            <search position="after"><![CDATA[
+                $store_info = $this->model_setting_setting->getSetting('config', $order_info['store_id']);
+            ]]></search>
+            <add><![CDATA[
+                $this->load->model('module/simplecustom');
+                
+                $customInfo = $this->model_module_simplecustom->getCustomFields('order', $order_info['order_id'], $order_info['language_code']);
+            ]]></add>
+        </operation>
+        <operation>
+            <search position="before"><![CDATA[
+                $shipping_address = str_replace(
+            ]]></search>
+            <add><![CDATA[
+                $find[] = '{company_id}';
+                $find[] = '{tax_id}';
+                $replace['company_id'] = isset($order_info['shipping_company_id']) ? $order_info['shipping_company_id'] : '';
+                $replace['tax_id'] = isset($order_info['shipping_tax_id']) ? $order_info['shipping_tax_id'] : '';
+
+                foreach($customInfo as $id => $value) {
+                    if (strpos($id, 'shipping_') === 0) {
+                        $id = str_replace('shipping_', '', $id);
+                        $find[] = '{'.$id.'}';
+                        $replace[$id] = $value;
+                    } elseif (strpos($id, 'payment_') === false) {
+                        $find[] = '{'.$id.'}';
+                        $replace[$id] = $value;
+                    }
+                }
+            ]]></add>
+        </operation>
+        <operation>
+            <search position="before"><![CDATA[
+                $payment_address = str_replace
+            ]]></search>
+            <add><![CDATA[
+                $find[] = '{company_id}';
+                $find[] = '{tax_id}';
+                $replace['company_id'] = isset($order_info['payment_company_id']) ? $order_info['payment_company_id'] : '';
+                $replace['tax_id'] = isset($order_info['payment_tax_id']) ? $order_info['payment_tax_id'] : '';
+
+                foreach($customInfo as $id => $value) {
+                    if (strpos($id, 'payment_') === 0) {
+                        $id = str_replace('payment_', '', $id);
+                        $find[] = '{'.$id.'}';
+                        $replace[$id] = $value;
+                    } elseif (strpos($id, 'shipping_') === false) {
+                        $find[] = '{'.$id.'}';
+                        $replace[$id] = $value;
+                    }
+                }
+            ]]></add>
+        </operation>
+    </file>
+    
+    <file name="admin/view/template/sale/customer_form.tpl">
+        <operation>
+            <search position="after"><![CDATA[
+            <div id="tab-customer" class="vtabs-content">
+            ]]></search>
+            <add><![CDATA[
+            <script type="text/javascript">
+                jQuery(function(){
+                    jQuery('#tab-customer table').after('<div id="simple_custom_customer" class="simple-container"></div>');
+                    jQuery('#simple_custom_customer').load('index.php?option=com_mijoshop&format=raw&tmpl=component&route=module/simple/custom&token=<?php echo $token; ?>&set=customer&object=customer&id=<?php echo $customer_id; ?>');
+                });
+            </script>
+            ]]></add>
+        </operation>
+        <operation>
+            <search position="after"><![CDATA[
+            <input type="hidden" name="address[<?php echo $address_row; ?>][address_id]" value="<?php echo $address['address_id']; ?>" />
+            ]]></search>
+            <add><![CDATA[
+            <script type="text/javascript">
+                jQuery(function(){
+                    jQuery('#tab-address-<?php echo $address_row; ?> table').after('<div id="simple_custom_address_<?php echo $address_row; ?>" class="simple-container"></div>');
+                    jQuery('#simple_custom_address_<?php echo $address_row; ?>').load('index.php?option=com_mijoshop&format=raw&tmpl=component&route=module/simple/custom&set=address&token=<?php echo $token; ?>&object=address&id=<?php echo $address['address_id']; ?>');
+                });
+            </script>
+            ]]></add>
+        </operation>
+    </file>
+
+    <file name="admin/view/template/sale/order_info.tpl">
+        <operation>
+            <search position="after"><![CDATA[
+            <div id="tab-order" class="vtabs-content">
+            ]]></search>
+            <add><![CDATA[
+            <script type="text/javascript">
+                jQuery(function(){
+                    jQuery('#tab-order table').after('<div id="simple_custom_order" class="simple-container"></div>');
+                    jQuery('#simple_custom_order').load('index.php?option=com_mijoshop&format=raw&tmpl=component&route=module/simple/custom&set=order&token=<?php echo $token; ?>&object=order&id=<?php echo $order_id; ?>');
+                });
+            </script>
+            ]]></add>
+        </operation>
+        <operation>
+            <search position="after"><![CDATA[
+            <div id="tab-payment" class="vtabs-content">
+            ]]></search>
+            <add><![CDATA[
+            <script type="text/javascript">
+                jQuery(function(){
+                    jQuery('#tab-payment table').after('<div id="simple_custom_payment_address" class="simple-container"></div>');
+                    jQuery('#simple_custom_payment_address').load('index.php?option=com_mijoshop&format=raw&tmpl=component&route=module/simple/custom&set=payment_address&token=<?php echo $token; ?>&object=order&id=<?php echo $order_id; ?>');
+                });
+            </script>
+            ]]></add>
+        </operation>
+        <operation>
+            <search position="after"><![CDATA[
+            <div id="tab-shipping" class="vtabs-content">
+            ]]></search>
+            <add><![CDATA[
+            <script type="text/javascript">
+                jQuery(function(){
+                    jQuery('#tab-shipping table').after('<div id="simple_custom_shipping_address" class="simple-container"></div>');
+                    jQuery('#simple_custom_shipping_address').load('index.php?option=com_mijoshop&format=raw&tmpl=component&route=module/simple/custom&set=shipping_address&token=<?php echo $token; ?>&object=order&id=<?php echo $order_id; ?>');
+                });
+            </script>
+            ]]></add>
+        </operation>
+    </file>
+
+    <file name="admin/view/template/sale/order_form.tpl">
+        <operation>
+            <search position="after"><![CDATA[
+            <div id="tab-customer" class="vtabs-content">
+            ]]></search>
+            <add><![CDATA[
+            <script type="text/javascript">
+                jQuery(function(){
+                    jQuery('#tab-customer table').after('<div id="simple_custom_order" class="simple-container"></div>');
+                    jQuery('#simple_custom_order').load('index.php?option=com_mijoshop&format=raw&tmpl=component&route=module/simple/custom&set=order&token=<?php echo $token; ?>&object=order&id=<?php echo $order_id; ?>');
+                });
+            </script>
+            ]]></add>
+        </operation>
+        <operation>
+            <search position="after"><![CDATA[
+            <div id="tab-payment" class="vtabs-content">
+            ]]></search>
+            <add><![CDATA[
+            <script type="text/javascript">
+                jQuery(function(){
+                    jQuery('#tab-payment table').after('<div id="simple_custom_payment_address" class="simple-container"></div>');
+                    jQuery('#simple_custom_payment_address').load('index.php?option=com_mijoshop&format=raw&tmpl=component&route=module/simple/custom&set=payment_address&token=<?php echo $token; ?>&object=order&id=<?php echo $order_id; ?>');
+                });
+            </script>
+            ]]></add>
+        </operation>
+        <operation>
+            <search position="after"><![CDATA[
+            <div id="tab-shipping" class="vtabs-content">
+            ]]></search>
+            <add><![CDATA[
+            <script type="text/javascript">
+                jQuery(function(){
+                    jQuery('#tab-shipping table').after('<div id="simple_custom_shipping_address" class="simple-container"></div>');
+                    jQuery('#simple_custom_shipping_address').load('index.php?option=com_mijoshop&format=raw&tmpl=component&route=module/simple/custom&set=shipping_address&token=<?php echo $token; ?>&object=order&id=<?php echo $order_id; ?>');
+                });
+            </script>
+            ]]></add>
+        </operation>
+    </file>
+    
+</modification>
